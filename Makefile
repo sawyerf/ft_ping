@@ -14,7 +14,7 @@ NAME =		ft_ping
 
 CC =		gcc
 
-CFLAGS =	-I inc/ -I libft/inc/ -Wall -Werror -Wextra
+CFLAGS =	-I inc/ -I libft/inc/ -Wall # -Werror -Wextra
 
 INC_DIR =	inc
 
