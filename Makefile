@@ -14,20 +14,22 @@ NAME =		ft_ping
 
 CC =		gcc
 
-CFLAGS =	-I inc/ -I libft/inc/ -Wall # -Werror -Wextra
 
 INC_DIR =	inc
 
-INC_FILE =	
+INC_FILE =	ft_ping.h
 		
 SRC_DIR =	src
 
-SRC_FILE =	main.c
+SRC_FILE =	main.c \
+			socket.c
+
+CFLAGS =	-I $(INC_DIR) -I libft/inc/ -Wall # -Werror -Wextra
 
 OBJ_DIR =	.obj
 OBJ_FILE =	$(SRC_FILE:.c=.o)
 
-CRT_DIR =	
+CRT_DIR =	./
 
 SRC = 		$(addprefix $(SRC_DIR)/,$(SRC_FILE))
 INC = 		$(addprefix $(INC_DIR)/,$(INC_FILE))
