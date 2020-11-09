@@ -1,5 +1,8 @@
 #include "libft.h"
 #include "ft_ping.h"
+#include <signal.h>
+
+extern t_ping g_ping;
 
 t_addrinfo *get_addr(char *host)
 {
@@ -22,38 +25,57 @@ t_addrinfo *get_addr(char *host)
 	return result;
 }
 
-int ft_ping(int sock, t_addrinfo *ai, t_icmphdr icmp_hdr)
+void ft_ping(int sig)
 {
 	int rc;
+	(void)sig;
 
-	icmp_hdr.un.echo.sequence++;
-	//t1 = ft_time();
-	rc = sendto(sock, &icmp_hdr, sizeof(icmp_hdr), 0, ai->ai_addr, ai->ai_addrlen);
+	g_ping.icmp_hdr.un.echo.sequence++;
+	rc = sendto(g_ping.sock, &g_ping.icmp_hdr, sizeof(g_ping.icmp_hdr),
+				0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0) {
 		perror("Sendto\n");
-		return 1;
+		exit(1);
 	}
-	return 0;
 }
 
-int ft_pong(int sock, t_addrinfo *ai, t_icmphdr icmp_hdr)
+void print_ping(float diff, t_icmphdr rcv_hdr)
 {
-	int rc;
-	t_icmphdr rcv_hdr;
-	char address[] = "lol";
-	t_timeval diff = {0, 0} ;
-
-	rc = recvfrom(sock, &rcv_hdr, sizeof(rcv_hdr), 0, ai->ai_addr, &ai->ai_addrlen);
-	if (rc <= 0) {
-		perror("recvfrom\n");
-		return 1;
-	} else if (rc < sizeof(rcv_hdr)) {
-		ft_printf("Error, got short ICMP packet, %d bytes\n", rc);
-		return 1;
-	}
-	//diff = ft_timediff(t1, ft_time());
-	ft_printf("?? bytes from %s: icmp_seq=%d ttl=?? time= %d s %d ms type=%d\n", address, icmp_hdr.un.echo.sequence, diff.tv_sec, diff.tv_usec, rcv_hdr.type);
+	ft_printf("?? bytes from %s: icmp_seq=%d ttl=?? ",
+		g_ping.address, rcv_hdr.un.echo.sequence);
+	ft_printf("time=%.2f ms type=%d\n", diff, rcv_hdr.type);
+//	else
+//		ft_printf("time=%d s %.2f ms type=%d\n", diff.tv_sec, usec, rcv_hdr.type);
 	alarm(1);
+}
+
+int ft_pong()
+{
+	t_icmphdr rcv_hdr;
+	float diff;
+	struct iovec io;
+	struct msghdr msg;
+	char			buffer[512];
+	int ret;
+
+	io.iov_base = &rcv_hdr;
+	io.iov_len = sizeof(t_icmphdr);
+	msg.msg_name = g_ping.ai;
+	msg.msg_namelen = sizeof(t_addrinfo);
+	msg.msg_iov = &io;
+	msg.msg_iovlen = 1;
+	msg.msg_control = buffer;
+	msg.msg_controllen = sizeof(buffer);
+	msg.msg_flags = 0;
+	//ft_printf("buffer: %s\n", buffer);
+	ret = recvmsg(g_ping.sock, &msg, 0);
+	if (ret == -1)
+		ft_printf("recvmsg failed");
+
+	diff = ft_timediff(g_ping.t1, ft_time());
+	print_ping(diff, rcv_hdr);
+	g_ping.t1 = ft_time();
+	g_ping.t1.tv_sec += 1;
 	return 0;
 }
 
