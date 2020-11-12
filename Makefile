@@ -22,9 +22,11 @@ INC_FILE =	ft_ping.h
 SRC_DIR =	src
 
 SRC_FILE =	main.c \
-			socket.c
+			socket.c \
+			time.c \
+			print.c
 
-CFLAGS =	-I $(INC_DIR) -I libft/inc/ -Wall # -Werror -Wextra
+CFLAGS =	-I $(INC_DIR) -I libft/inc/ -Wall -lm # -Werror -Wextra
 
 OBJ_DIR =	.obj
 OBJ_FILE =	$(SRC_FILE:.c=.o)

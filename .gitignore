@@ -277,3 +277,4 @@ tags
 # Persistent undo
 [._]*.un~
 ft_ping
+vgcore*
