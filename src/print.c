@@ -4,10 +4,10 @@
 
 extern t_ping g_ping;
 
-void print_ping(float diff, t_icmphdr rcv_hdr)
+void print_ping(float diff, t_icmphdr rcv_hdr, int bfrom)
 {
-	ft_printf("?? bytes from %s: icmp_seq=%d ttl=?? ",
-		g_ping.address, rcv_hdr.un.echo.sequence);
+	ft_printf("%d bytes from %s: icmp_seq=%d ttl=?? ",
+		bfrom, g_ping.address, rcv_hdr.un.echo.sequence);
 	ft_printf("time=%.1f ms type=%d\n", diff, rcv_hdr.type);
 //	else
 //		ft_printf("time=%d s %.2f ms type=%d\n", diff.tv_sec, usec, rcv_hdr.type);
@@ -36,6 +36,7 @@ void ft_finalstat(int sig)
 		g_ping.tavg / 1000.0,
 		g_ping.tmax / 1000.0,
 		mdev / 1000.0);
+	free(g_ping.ai);
 	exit(0);
 }
 

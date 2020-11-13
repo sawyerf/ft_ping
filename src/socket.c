@@ -19,7 +19,6 @@ t_addrinfo *get_addr(char *host)
 	{
 		ft_printf ("getaddrinfo: %s\n", gai_strerror (s));
 		exit (EXIT_FAILURE);
-		return NULL;
 	}
 	result->ai_socktype = SOCK_DGRAM;
 	return result;
@@ -32,6 +31,7 @@ void ft_ping(int sig)
 	t_packet packet;
 
 	g_ping.icmp_hdr.un.echo.sequence++;
+//	packet.ip = g_ping.ip_hdr;
 	packet.icmp = g_ping.icmp_hdr;
 	packet.tv = ft_time();
 	
@@ -68,9 +68,10 @@ int ft_pong()
 		ft_printf("recvmsg failed");
 		exit(1);
 	}
+	// ft_printf("bytes: %d\n", ret);
 
 	diff = ft_updatetstat(packet.tv, ft_time());
-	print_ping(diff, packet.icmp);
+	print_ping(diff, packet.icmp, ret);
 	return 0;
 }
 

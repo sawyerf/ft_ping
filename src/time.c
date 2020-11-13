@@ -27,7 +27,7 @@ long ft_timediff(t_timeval t1, t_timeval t2)
 	else
 	{
 		diff.tv_sec -= 1;
-		diff.tv_usec = t2.tv_usec + t1.tv_usec;
+		diff.tv_usec = 1000000 - t1.tv_usec + t2.tv_usec;
 	}
 	ldiff = (int)diff.tv_sec * 100 * 10000;
 	if (diff.tv_usec)

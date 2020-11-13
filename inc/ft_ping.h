@@ -9,19 +9,23 @@
 # include <arpa/inet.h>
 # include <sys/time.h>
 # include <signal.h>
+# include <arpa/inet.h>
+
 
 typedef struct addrinfo t_addrinfo;
 typedef struct icmphdr t_icmphdr;
+typedef struct iphdr t_iphdr;
 typedef struct timeval t_timeval;
 
 typedef struct	s_ping
 {
 	char		*host;
 	char		address[INET6_ADDRSTRLEN];
-	//char		*address;
 	int			sock;
 	t_addrinfo	*ai;
 	t_icmphdr	icmp_hdr;
+//	t_iphdr		ip_hdr;
+
 	t_timeval	tstart;
 	float		tmin;
 	float		tmax;
@@ -35,6 +39,7 @@ typedef struct	s_ping
 
 typedef struct	s_packet
 {
+//	t_iphdr		ip;
 	t_icmphdr	icmp;
 	t_timeval	tv;
 }				t_packet;
@@ -50,7 +55,7 @@ int			ft_pong();
 int			ft_socket(t_addrinfo *ai);
 t_addrinfo	*get_addr(char *host);
 float		ft_updatetstat(t_timeval t1, t_timeval t2);
-void print_ping(float diff, t_icmphdr rcv_hdr);
-void ft_finalstat(int sig);
+void		print_ping(float diff, t_icmphdr rcv_hdr, int bfrom);
+void		ft_finalstat(int sig);
 
 #endif
