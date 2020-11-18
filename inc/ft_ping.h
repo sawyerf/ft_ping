@@ -36,19 +36,11 @@ typedef struct	s_ping
 	int			ti;
 }				t_ping;
 
-
 typedef struct	s_packet
 {
 	t_icmphdr	icmp;
 	t_timeval	tv;
 }				t_packet;
-
-typedef struct	s_rpacket
-{
-	//t_iphdr		ip;
-	t_icmphdr	icmp;
-	t_timeval	tv;
-}				t_rpacket;
 
 void		fill_icmp(t_icmphdr *icmp);
 t_timeval	ft_time();
@@ -61,6 +53,7 @@ t_addrinfo	*get_addr(char *host);
 float		ft_updatetstat(t_timeval t1, t_timeval t2);
 void		print_ping(t_msghdr msg, float diff, int bfrom);
 void		ft_finalstat(int sig);
-int	get_ttl(t_msghdr *msg);
+int			get_ttl(t_msghdr *msg);
+void		atos(t_addrinfo *ai);
 
 #endif

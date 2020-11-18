@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-t_opt	pf_lensign(t_printf *lst, t_opt opt)
+t_propt	pf_lensign(t_printf *lst, t_propt opt)
 {
 	(ft_cisin(lst->settings, '+')) ? ft_strcpy(opt.sign, "+") : 0;
 	(ft_cisin(lst->var, '-')) ? ft_strcpy(opt.sign, "-") : 0;
@@ -21,7 +21,7 @@ t_opt	pf_lensign(t_printf *lst, t_opt opt)
 	return (opt);
 }
 
-t_opt	pf_len_f(t_printf *lst, t_opt opt)
+t_propt	pf_len_f(t_printf *lst, t_propt opt)
 {
 	char	c;
 
@@ -47,7 +47,7 @@ t_opt	pf_len_f(t_printf *lst, t_opt opt)
 	return (opt);
 }
 
-t_opt	pf_lenu(t_printf *lst, t_opt opt)
+t_propt	pf_lenu(t_printf *lst, t_propt opt)
 {
 	char	c;
 
@@ -75,7 +75,7 @@ t_opt	pf_lenu(t_printf *lst, t_opt opt)
 	return (opt);
 }
 
-t_opt	pf_len(t_printf *lst, t_opt opt)
+t_propt	pf_len(t_printf *lst, t_propt opt)
 {
 	char	c;
 

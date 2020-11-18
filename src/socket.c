@@ -3,6 +3,27 @@
 #include <signal.h>
 #include <netinet/in.h>
 
+extern t_ping g_ping;
+
+void atos(t_addrinfo *ai)
+{
+	struct addrinfo * _res;
+
+	for(_res = ai; _res != NULL; _res = _res->ai_next)
+	{
+		if (_res->ai_family == AF_INET)
+		{
+			if (NULL == inet_ntop(AF_INET,
+				&((struct sockaddr_in *)_res->ai_addr)->sin_addr,
+					g_ping.address, sizeof(g_ping.address)))
+			{
+				perror("inet_ntop");
+				exit(1);
+			}
+		}
+	}
+}
+
 struct cmsghdr *next_cmsg (struct msghdr *msg, struct cmsghdr *cmsg)
 {
 	void *ctl;
@@ -17,8 +38,6 @@ struct cmsghdr *next_cmsg (struct msghdr *msg, struct cmsghdr *cmsg)
 		return NULL;
 	return ptr;
 }
-
-extern t_ping g_ping;
 
 int	get_ttl(t_msghdr *msg)
 {
@@ -87,7 +106,7 @@ int ft_pong()
 	struct iovec io;
 	struct msghdr msg;
 	char		buffer[512];
-	t_rpacket	packet;
+	t_packet	packet;
 	int ret;
 
 	io.iov_base = &packet;

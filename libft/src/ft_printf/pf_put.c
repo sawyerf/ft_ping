@@ -29,7 +29,7 @@ void	pf_putstrr(char *str, char c)
 
 char	*pf_putchar(t_printf *lst, const char c)
 {
-	t_opt	opt;
+	t_propt	opt;
 
 	if (!(lst->var = ft_strnew(1)))
 		return (NULL);
@@ -49,7 +49,7 @@ char	*pf_putchar(t_printf *lst, const char c)
 
 char	*pf_putstr(t_printf *lst, const char *s)
 {
-	t_opt opt;
+	t_propt opt;
 
 	opt = pf_optnew();
 	if (!s)
@@ -74,7 +74,7 @@ char	*pf_putstr(t_printf *lst, const char *s)
 
 char	*pf_putaddr(t_printf *lst, void *addr)
 {
-	t_opt	opt;
+	t_propt	opt;
 
 	opt = pf_optnew();
 	opt.nb_zero = 2;

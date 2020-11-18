@@ -23,7 +23,7 @@ char	*pf_addc(char *s, int n, char c)
 	return (s);
 }
 
-char	*add_base_prefix(t_opt opt, char *s)
+char	*add_base_prefix(t_propt opt, char *s)
 {
 	if (opt.nb_zero == 2)
 		ft_strcat(s, "0X");
@@ -32,7 +32,7 @@ char	*add_base_prefix(t_opt opt, char *s)
 	return (s);
 }
 
-char	*pf_options(char *s, t_opt opt)
+char	*pf_options(char *s, t_propt opt)
 {
 	char *tmp;
 

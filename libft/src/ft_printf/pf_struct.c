@@ -26,9 +26,9 @@ t_base			g_base[] = {
 	{'\0', 0}
 };
 
-t_opt			pf_optnew(void)
+t_propt			pf_optnew(void)
 {
-	t_opt	opt;
+	t_propt	opt;
 
 	opt.tmp = NULL;
 	opt.nb_sig = 0;

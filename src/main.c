@@ -1,26 +1,12 @@
 #include "libft.h"
 #include "ft_ping.h"
 
+# define OPT_ARG 0
+# define OPT_OPT 1
+# define OPT_END 2
+# define OPT_ERR 3
+
 t_ping g_ping;
-
-void atos(t_addrinfo *ai)
-{
-	struct addrinfo * _res;
-
-	for(_res = ai; _res != NULL; _res = _res->ai_next)
-	{
-		if (_res->ai_family == AF_INET)
-		{
-			if (NULL == inet_ntop(AF_INET,
-				&((struct sockaddr_in *)_res->ai_addr)->sin_addr,
-					g_ping.address, sizeof(g_ping.address)))
-			{
-				perror("inet_ntop");
-				exit(1);
-			}
-		}
-	}
-}
 
 void fill_icmp(t_icmphdr *icmp)
 {
@@ -45,15 +31,27 @@ void fill_ping()
 
 int main(int arg, char **argv)
 {
+	t_opt *opt;
 	signal(SIGALRM, ft_ping);
 	signal(SIGINT, ft_finalstat);
-
 	g_ping.host = argv[1];
 	fill_ping();
+
+	opt_init(&opt);
+	char *lol;
+	int ttl;
+
+	lol = NULL;
+	ttl = 0;
+	opt_addvar(&opt, "-v", NULL, 0);
+	opt_addvar2(&opt, "-r", (void**)&lol, OPT_STR);
+	opt_addvar(&opt, "-t", (void*)&ttl, OPT_INT);
+	opt_parser(opt, ++argv);
+	ft_printf("lol: %s\n", lol);
+	ft_printf("ttl: %d\n", ttl);
 	printf("PING %s(%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address, sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
 		return 1;
-
 
 	ft_ping(0);
 	while (1)

@@ -21,6 +21,12 @@
 # include "get_next_line.h"
 # include "str.h"
 
+# define OPT_INT 1
+# define OPT_STR 2
+# define OPT_VAR 1
+# define OPT_FUNC 2
+
+
 typedef	struct		s_list
 {
 	void			*content;
@@ -29,7 +35,16 @@ typedef	struct		s_list
 	struct s_list	*next;
 }					t_list;
 
-extern int			g_optind;
+typedef struct		s_opt
+{
+	char			opt[10];
+	char			type;
+//	int				(func)(char *opt, char *arg);
+	void			**var2;
+	void			*var;
+	char			type_var;
+	struct s_opt	*next;
+}					t_opt;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -92,7 +107,6 @@ void				ft_lstdel(t_list **alst);
 int					ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
-int					ft_getopt(char **argv, char *opstring);
 char				**ft_splitblanks(char const *s);
 int					ft_isblank(char c);
 char				*ft_strlower(char *s);
@@ -124,5 +138,9 @@ int					ft_tabcmp(char **tab, char *s);
 int					ft_lstisin(t_list *lst, char *is);
 char				*ft_ttos(char **tab, char *sep);
 char				**ft_tabstrdup(char **dst, char **cpy);
+int					opt_addvar(t_opt **opt, char *arg, void *var, char type_var);
+int					opt_addvar2(t_opt **opt, char *arg, void **var, char type_var);
+void				opt_init(t_opt **opt);
+int					opt_parser(t_opt *opt, char **arg);
 
 #endif

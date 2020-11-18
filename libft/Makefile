@@ -14,7 +14,7 @@ NAME = libft.a
 
 CC = gcc
 
-CFLAGS = -I inc/ -Wall -Werror -Wextra 
+CFLAGS = -I inc/ -Wall -Werror -Wextra -g
 
 INC_DIR = inc
 
@@ -88,7 +88,7 @@ SRC_FILE =	ft_strnsplit.c \
 			ft_lstiter.c \
 			ft_lstmap.c \
 			get_next_line.c \
-			ft_getopt.c \
+			ft_opt.c \
 			ft_printf/ft_printf.c \
 			ft_printf/pf_base.c \
 			ft_printf/pf_ftoa.c \
