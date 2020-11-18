@@ -16,6 +16,7 @@ typedef struct addrinfo t_addrinfo;
 typedef struct icmphdr t_icmphdr;
 typedef struct iphdr t_iphdr;
 typedef struct timeval t_timeval;
+typedef struct msghdr t_msghdr;
 
 typedef struct	s_ping
 {
@@ -24,7 +25,6 @@ typedef struct	s_ping
 	int			sock;
 	t_addrinfo	*ai;
 	t_icmphdr	icmp_hdr;
-//	t_iphdr		ip_hdr;
 
 	t_timeval	tstart;
 	float		tmin;
@@ -39,23 +39,28 @@ typedef struct	s_ping
 
 typedef struct	s_packet
 {
-//	t_iphdr		ip;
 	t_icmphdr	icmp;
 	t_timeval	tv;
 }				t_packet;
+
+typedef struct	s_rpacket
+{
+	//t_iphdr		ip;
+	t_icmphdr	icmp;
+	t_timeval	tv;
+}				t_rpacket;
 
 void		fill_icmp(t_icmphdr *icmp);
 t_timeval	ft_time();
 long		ft_timediff(t_timeval t1, t_timeval t2);
 int			main(int arg, char **argv);
-//int		ft_ping(int sock, t_addrinfo *ai, t_icmphdr icmp_hdr);
-//int		ft_pong(int sock, t_addrinfo *ai, t_icmphdr icmp_hdr);
 void		ft_ping(int sig);
 int			ft_pong();
 int			ft_socket(t_addrinfo *ai);
 t_addrinfo	*get_addr(char *host);
 float		ft_updatetstat(t_timeval t1, t_timeval t2);
-void		print_ping(float diff, t_icmphdr rcv_hdr, int bfrom);
+void		print_ping(t_msghdr msg, float diff, int bfrom);
 void		ft_finalstat(int sig);
+int	get_ttl(t_msghdr *msg);
 
 #endif

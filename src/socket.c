@@ -1,8 +1,46 @@
 #include "libft.h"
 #include "ft_ping.h"
 #include <signal.h>
+#include <netinet/in.h>
+
+struct cmsghdr *next_cmsg (struct msghdr *msg, struct cmsghdr *cmsg)
+{
+	void *ctl;
+	__kernel_size_t size;
+	void *ptr;
+
+	ctl = msg->msg_control;
+	size = msg->msg_controllen;
+	
+	ptr = cmsg + CMSG_ALIGN(cmsg->cmsg_len);
+	if ((unsigned long)(ptr + 1 - ctl) > size)
+		return NULL;
+	return ptr;
+}
 
 extern t_ping g_ping;
+
+int	get_ttl(t_msghdr *msg)
+{
+	struct cmsghdr *cmsgh;
+
+	cmsgh = NULL;
+	if (msg->msg_controllen >= sizeof(struct cmsghdr)) 
+		cmsgh = msg->msg_control;
+	while (cmsgh)
+	{
+		if (cmsgh->cmsg_level != SOL_IP)
+			continue;
+		if (cmsgh->cmsg_type == IP_TTL)
+		{
+			if (cmsgh->cmsg_len < sizeof(int))
+				continue;
+			return *(int*)((void*) cmsgh + sizeof(struct cmsghdr));
+		}
+		cmsgh = next_cmsg(msg, cmsgh);
+	}
+	return 0;
+}
 
 t_addrinfo *get_addr(char *host)
 {
@@ -31,7 +69,6 @@ void ft_ping(int sig)
 	t_packet packet;
 
 	g_ping.icmp_hdr.un.echo.sequence++;
-//	packet.ip = g_ping.ip_hdr;
 	packet.icmp = g_ping.icmp_hdr;
 	packet.tv = ft_time();
 	
@@ -50,11 +87,11 @@ int ft_pong()
 	struct iovec io;
 	struct msghdr msg;
 	char		buffer[512];
-	t_packet	packet;
+	t_rpacket	packet;
 	int ret;
 
 	io.iov_base = &packet;
-	io.iov_len = sizeof(t_packet);
+	io.iov_len = sizeof(packet);
 	msg.msg_name = g_ping.ai;
 	msg.msg_namelen = sizeof(t_addrinfo);
 	msg.msg_iov = &io;
@@ -71,15 +108,19 @@ int ft_pong()
 	// ft_printf("bytes: %d\n", ret);
 
 	diff = ft_updatetstat(packet.tv, ft_time());
-	print_ping(diff, packet.icmp, ret);
+	print_ping(msg, diff, ret);
 	return 0;
 }
 
 int ft_socket(t_addrinfo *ai)
 {
 	int sock;
+	int ittl = 64;
+	int yes = 1;
 
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
+	setsockopt(sock, IPPROTO_IP, IP_TTL, &ittl, sizeof ittl);
+	setsockopt(sock, IPPROTO_IP, IP_RECVTTL, &yes, sizeof(yes));
 	if (sock < 0)
 		ft_printf("socket fail");
 	return sock;
