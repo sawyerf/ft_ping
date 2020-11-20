@@ -34,6 +34,8 @@ typedef struct	s_ping
 	float		tsum;
 	long long	tsumd;
 	int			ti;
+	int			ttl;
+	t_optpars	popt;
 }				t_ping;
 
 typedef struct	s_packet

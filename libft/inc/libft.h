@@ -26,6 +26,13 @@
 # define OPT_VAR 1
 # define OPT_FUNC 2
 
+# define MAX_OPT 10
+# define MAX_OPTARG 10
+
+# define OPT_OK 0
+# define OPT_NFOUND 1
+# define OPT_IVLARG 2
+# define OPT_MISSARG 3
 
 typedef	struct		s_list
 {
@@ -37,7 +44,7 @@ typedef	struct		s_list
 
 typedef struct		s_opt
 {
-	char			opt[10];
+	char			opt[MAX_OPT];
 	char			type;
 //	int				(func)(char *opt, char *arg);
 	void			**var2;
@@ -45,6 +52,12 @@ typedef struct		s_opt
 	char			type_var;
 	struct s_opt	*next;
 }					t_opt;
+
+typedef struct		s_optpars
+{
+	char			*arg[MAX_OPTARG];
+	char			*opt[MAX_OPTARG];
+}					t_optpars;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -121,12 +134,13 @@ int					ft_dprintf(int fd, const char *format, ...);
 char				*ft_zprintf(const char *format, ...);
 int					ft_cisin(char *s, char c);
 char				*ft_strechr(const char *s, int c);
-void				ft_tabdel(char ***tab);
-char				**ft_tabdup(char **tab);
-int					ft_tablen(char **tab);
-char				**ft_tabnew(size_t len);
+char				**ft_tabadd(char **tab, char *s);
 char				**ft_tabcpy(char **tab);
+char				**ft_tabdup(char **tab);
+char				**ft_tabnew(size_t len);
 char				**ms_tabcpy(char **dst, char **cpy);
+int					ft_tablen(char **tab);
+void				ft_tabdel(char ***tab);
 int					ft_strichr(char *s, char c, int n);
 int					ft_strisprint(char *str);
 int					ft_strisdigit(char *str);
@@ -141,6 +155,7 @@ char				**ft_tabstrdup(char **dst, char **cpy);
 int					opt_addvar(t_opt **opt, char *arg, void *var, char type_var);
 int					opt_addvar2(t_opt **opt, char *arg, void **var, char type_var);
 void				opt_init(t_opt **opt);
-int					opt_parser(t_opt *opt, char **arg);
+int  opt_parser(t_opt *opt, char **arg, t_optpars *optpars);
+void	opt_free(t_opt **opt);
 
 #endif

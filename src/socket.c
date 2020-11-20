@@ -134,11 +134,11 @@ int ft_pong()
 int ft_socket(t_addrinfo *ai)
 {
 	int sock;
-	int ittl = 64;
 	int yes = 1;
+	//int ttl = 46;
 
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-	setsockopt(sock, IPPROTO_IP, IP_TTL, &ittl, sizeof ittl);
+	setsockopt(sock, IPPROTO_IP, IP_TTL, &g_ping.ttl, sizeof(g_ping.ttl));
 	setsockopt(sock, IPPROTO_IP, IP_RECVTTL, &yes, sizeof(yes));
 	if (sock < 0)
 		ft_printf("socket fail");

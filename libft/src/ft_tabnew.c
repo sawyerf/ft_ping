@@ -27,3 +27,13 @@ char	**ft_tabnew(size_t size)
 	}
 	return (tab);
 }
+
+char	**ft_tabadd(char **tab, char *s)
+{
+	int len;
+
+	len = ft_tablen(tab);
+	tab[len] = s;
+	tab[len + 1] = NULL;
+	return tab;
+}

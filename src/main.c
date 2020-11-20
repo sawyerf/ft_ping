@@ -29,31 +29,54 @@ void fill_ping()
 	g_ping.tavg = 0;
 }
 
+int options(char **argv)
+{
+	t_opt	*opt;
+	int		ret;
+
+	g_ping.ttl = 64;
+	opt_init(&opt);
+	opt_addvar(&opt, "-v", NULL, 0);
+	opt_addvar(&opt, "-t", (void*)&g_ping.ttl, OPT_INT);
+	ret = opt_parser(opt, ++argv, &g_ping.popt);
+	if (ft_tablen(g_ping.popt.arg))
+		g_ping.host = g_ping.popt.arg[0];
+	else if (!ret)
+	{
+		ft_printf("lol y manque un argument"); // erreur
+		ret = 1; // autre chiffre
+	}
+	opt_free(&opt);
+	return ret;
+}
+
 int main(int arg, char **argv)
 {
-	t_opt *opt;
+	int ret;	
+
 	signal(SIGALRM, ft_ping);
 	signal(SIGINT, ft_finalstat);
-	g_ping.host = argv[1];
+	if ((ret = options(argv)))
+		return ret;
 	fill_ping();
-
-	opt_init(&opt);
-	char *lol;
-	int ttl;
-
-	lol = NULL;
-	ttl = 0;
-	opt_addvar(&opt, "-v", NULL, 0);
-	opt_addvar2(&opt, "-r", (void**)&lol, OPT_STR);
-	opt_addvar(&opt, "-t", (void*)&ttl, OPT_INT);
-	opt_parser(opt, ++argv);
-	ft_printf("lol: %s\n", lol);
-	ft_printf("ttl: %d\n", ttl);
-	printf("PING %s(%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address, sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
+	printf("PING %s(%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address,
+			sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
 		return 1;
-
 	ft_ping(0);
 	while (1)
 		ft_pong();
 }
+
+// int i =0;
+// while (optpars.opt[i])
+// {
+// 	ft_printf("opt[%d]: %s\n", i, optpars.opt[i]);
+// 	i++;
+// }
+// i = 0;
+// while (optpars.arg[i])
+// {
+// 	ft_printf("arg[%d]: %s\n", i, optpars.arg[i]);
+// 	i++;
+// }
