@@ -60,7 +60,7 @@ int		opt_parseopt(t_opt *mopt, char ***argv)
 		*mopt->var2 = arg[1];
 	else if (mopt->type_var == OPT_INT)
 	{
-		if (!ft_isalldigit(arg[1]))
+		if (!ft_isint(arg[1]))
 		{
 			ft_printf("invalid argument: '%s'\n", arg[1]);
 			return OPT_IVLARG;
@@ -77,10 +77,11 @@ void	opt_free(t_opt **opt)
 	t_opt *nopt;
 
 	nopt = *opt;
-	while (nopt)
+	while (*opt)
 	{
-		free(nopt);
-		nopt = nopt->next;
+		nopt = (*opt)->next;
+		free(*opt);
+		*opt = nopt;
 	}
 	*opt = NULL;
 }

@@ -39,6 +39,12 @@ int options(char **argv)
 	opt_addvar(&opt, "-v", NULL, 0);
 	opt_addvar(&opt, "-t", (void*)&g_ping.ttl, OPT_INT);
 	ret = opt_parser(opt, ++argv, &g_ping.popt);
+	opt_free(&opt);
+	if (g_ping.ttl < 0 || g_ping.ttl > 255)
+	{
+		ft_printf("ping: invalid argument: '%d': out of range: 0 <= value <= 255\n", g_ping.ttl);
+		return 1;
+	}
 	if (ft_tablen(g_ping.popt.arg))
 		g_ping.host = g_ping.popt.arg[0];
 	else if (!ret)
@@ -46,7 +52,6 @@ int options(char **argv)
 		ft_printf("lol y manque un argument"); // erreur
 		ret = 1; // autre chiffre
 	}
-	opt_free(&opt);
 	return ret;
 }
 

@@ -157,5 +157,6 @@ int					opt_addvar2(t_opt **opt, char *arg, void **var, char type_var);
 void				opt_init(t_opt **opt);
 int  opt_parser(t_opt *opt, char **arg, t_optpars *optpars);
 void	opt_free(t_opt **opt);
+int ft_isint(char *s);
 
 #endif

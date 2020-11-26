@@ -22,3 +22,12 @@ int	ft_isalldigit(char *s)
 	}
 	return (1);
 }
+
+int ft_isint(char *s)
+{
+	if (*s == '\0')
+			return 0;
+	if (*s == '-' || *s == '+')
+		s++;
+	return ft_isalldigit(s);
+}

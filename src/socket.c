@@ -119,13 +119,16 @@ int ft_pong()
 	msg.msg_controllen = sizeof(buffer);
 	msg.msg_flags = 0;
 	ret = recvmsg(g_ping.sock, &msg, 0);
-	if (ret == -1)
-	{
-		ft_printf("recvmsg failed");
-		exit(1);
-	}
+
+	//if (ret == -1)
+	//{
+	//	ft_printf("recvmsg failed");
+	//	exit(1);
+	//}
 	// ft_printf("bytes: %d\n", ret);
 
+	print_ping(msg, 0, ret);
+	ft_printf("lolipop: %d\n", ret);
 	diff = ft_updatetstat(packet.tv, ft_time());
 	print_ping(msg, diff, ret);
 	return 0;
@@ -140,6 +143,8 @@ int ft_socket(t_addrinfo *ai)
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
 	setsockopt(sock, IPPROTO_IP, IP_TTL, &g_ping.ttl, sizeof(g_ping.ttl));
 	setsockopt(sock, IPPROTO_IP, IP_RECVTTL, &yes, sizeof(yes));
+	setsockopt(sock, IPPROTO_IP, IP_RECVERR, &yes, sizeof(yes));
+
 	if (sock < 0)
 		ft_printf("socket fail");
 	return sock;
