@@ -24,43 +24,6 @@ void atos(t_addrinfo *ai)
 	}
 }
 
-struct cmsghdr *next_cmsg (struct msghdr *msg, struct cmsghdr *cmsg)
-{
-	void *ctl;
-	__kernel_size_t size;
-	void *ptr;
-
-	ctl = msg->msg_control;
-	size = msg->msg_controllen;
-	
-	ptr = cmsg + CMSG_ALIGN(cmsg->cmsg_len);
-	if ((unsigned long)(ptr + 1 - ctl) > size)
-		return NULL;
-	return ptr;
-}
-
-int	get_ttl(t_msghdr *msg)
-{
-	struct cmsghdr *cmsgh;
-
-	cmsgh = NULL;
-	if (msg->msg_controllen >= sizeof(struct cmsghdr)) 
-		cmsgh = msg->msg_control;
-	while (cmsgh)
-	{
-		if (cmsgh->cmsg_level != SOL_IP)
-			continue;
-		if (cmsgh->cmsg_type == IP_TTL)
-		{
-			if (cmsgh->cmsg_len < sizeof(int))
-				continue;
-			return *(int*)((void*) cmsgh + sizeof(struct cmsghdr));
-		}
-		cmsgh = next_cmsg(msg, cmsgh);
-	}
-	return 0;
-}
-
 t_addrinfo *get_addr(char *host)
 {
 	t_addrinfo hints;
