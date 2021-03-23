@@ -1,7 +1,6 @@
 #include "libft.h"
 #include "ft_ping.h"
 #include <signal.h>
-#include <netinet/in.h>
 
 extern t_ping g_ping;
 
@@ -40,7 +39,7 @@ t_addrinfo *get_addr(char *host)
 		ft_printf ("getaddrinfo: %s\n", gai_strerror (s));
 		exit (EXIT_FAILURE);
 	}
-	result->ai_socktype = SOCK_DGRAM;
+	//result->ai_socktype = SOCK_DGRAM;
 	return result;
 }
 
@@ -51,9 +50,12 @@ void ft_ping(int sig)
 	t_packet packet;
 
 	g_ping.icmp_hdr.un.echo.sequence++;
+	fill_ip(&packet.ip, g_ping.host);
 	packet.icmp = g_ping.icmp_hdr;
+	ft_printf("type: %d\n", packet.icmp.type);
+	ft_printf("ttl : %d\n", packet.ip.ttl);
 	packet.tv = ft_time();
-	
+
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
 				0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0) {
@@ -81,14 +83,8 @@ int ft_pong()
 	msg.msg_control = buffer;
 	msg.msg_controllen = sizeof(buffer);
 	msg.msg_flags = 0;
+	ft_printf("recvmsg start\n");
 	ret = recvmsg(g_ping.sock, &msg, 0);
-
-	//if (ret == -1)
-	//{
-	//	ft_printf("recvmsg failed");
-	//	exit(1);
-	//}
-	// ft_printf("bytes: %d\n", ret);
 
 	print_ping(msg, 0, ret);
 	ft_printf("lolipop: %d\n", ret);
@@ -100,15 +96,14 @@ int ft_pong()
 int ft_socket(t_addrinfo *ai)
 {
 	int sock;
-	int yes = 1;
-	//int ttl = 46;
 
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-	setsockopt(sock, IPPROTO_IP, IP_TTL, &g_ping.ttl, sizeof(g_ping.ttl));
-	setsockopt(sock, IPPROTO_IP, IP_RECVTTL, &yes, sizeof(yes));
-	setsockopt(sock, IPPROTO_IP, IP_RECVERR, &yes, sizeof(yes));
+	//sock = socket(ai->ai_family, SOCK_DGRAM, IPPROTO_UDP);
 
 	if (sock < 0)
+	{
+		perror("socket");
 		ft_printf("socket fail");
+	}
 	return sock;
 }
