@@ -12,13 +12,13 @@ void fill_icmp(t_icmphdr *icmp)
 {
 	ft_memset(icmp, 0, sizeof(t_icmphdr));
 	icmp->type = 8;
+	icmp->code = 0;
 	icmp->un.echo.sequence = 0;
 	icmp->un.echo.id = 1234;
 }
 
 void fill_ip(t_iphdr *ip, char *host)
 {
-	ft_printf("fill_ip\n");
 	ft_memset(ip, 0, sizeof(t_iphdr));
 	ip->version = 4;
 	ip->ihl = sizeof(t_iphdr) / 4;

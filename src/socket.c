@@ -4,6 +4,24 @@
 
 extern t_ping g_ping;
 
+static uint16_t	csum(uint16_t *buffer, size_t len)
+{
+	uint32_t	sum;
+
+	sum = 0;
+	while (len > 1)
+	{
+		sum += *buffer;
+		buffer++;
+		len -= 2;
+	}
+	if (len == 1)
+		sum += *(unsigned char*)buffer;
+	sum = (sum >> 16) + (sum & 0xFFFF);
+	sum += (sum >> 16);
+	return ((uint16_t)~sum);
+}
+
 void atos(t_addrinfo *ai)
 {
 	struct addrinfo * _res;
@@ -32,7 +50,8 @@ t_addrinfo *get_addr(char *host)
 	memset(&hints, 0, sizeof (struct addrinfo));
 	hints.ai_family   = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
-	hints.ai_protocol = IPPROTO_ICMP;
+	// hints.ai_protocol = IPPROTO_ICMP;
+	hints.ai_protocol = IPPROTO_RAW;
 
 	if ((s = getaddrinfo (host, NULL, &hints, &result)) != 0)
 	{
@@ -50,14 +69,19 @@ void ft_ping(int sig)
 	t_packet packet;
 
 	g_ping.icmp_hdr.un.echo.sequence++;
-	fill_ip(&packet.ip, g_ping.host);
 	packet.icmp = g_ping.icmp_hdr;
-	ft_printf("type: %d\n", packet.icmp.type);
-	ft_printf("ttl : %d\n", packet.ip.ttl);
-	packet.tv = ft_time();
 
+	fill_ip(&packet.ip, g_ping.host);
+    	packet.ip.check = 0;
+    	packet.ip.check = csum ((unsigned short *) &packet.ip, packet.ip.tot_len);
+
+	packet.tv = ft_time();
+	packet.icmp.checksum = 0;
+	packet.icmp.checksum = csum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
+
+	ft_printf("sendto start\n");
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
-				0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
+		0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0) {
 		perror("Sendto\n");
 		exit(1);

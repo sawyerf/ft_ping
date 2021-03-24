@@ -46,7 +46,7 @@ typedef struct	s_packet
 	t_iphdr		ip;
 	t_icmphdr	icmp;
 	t_timeval	tv;
-}				t_packet;
+}		t_packet;
 
 void		fill_icmp(t_icmphdr *icmp);
 t_timeval	ft_time();
