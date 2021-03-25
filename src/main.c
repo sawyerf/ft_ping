@@ -26,10 +26,10 @@ void fill_ip(t_iphdr *ip, char *host)
 	ip->tot_len = sizeof(t_packet);
 	ip->id = htonl(54321);
 	ip->frag_off = 0;
-	ip->ttl = 255;
+	ip->ttl = g_ping.ttl;
 	ip->protocol = IPPROTO_ICMP;
-	ip->saddr = inet_addr("10.0.2.15"); //INADDR_ANY;
-	ip->daddr = inet_addr(host);
+	ip->saddr = INADDR_ANY;
+	ip->daddr = ((struct sockaddr_in*)g_ping.ai->ai_addr)->sin_addr.s_addr;// inet_addr(host);
 	ip->check = 0;
 	// iph->saddr = inet_addr ( source_ip );    //Spoof the source ip address
 	// iph->daddr = sin.sin_addr.s_addr;
@@ -84,7 +84,7 @@ int main(int arg, char **argv)
 		return ret;
 	fill_ping();
 	printf("PING %s(%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address,
-			sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
+		sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
 		return 1;
 	ft_ping(0);

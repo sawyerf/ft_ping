@@ -4,19 +4,11 @@
 
 extern t_ping g_ping;
 
-void print_ping(t_msghdr msg, float diff, int bfrom)
+void print_ping(t_packet *packet, float diff, int bfrom)
 {
-	t_icmphdr *icmp;
-
-	icmp = msg.msg_iov->iov_base;
-	ft_printf("icmp_seq=%d type=%d code=%d\n",
-		icmp->un.echo.sequence, icmp->type, icmp->code);
-	return ;
-	ft_printf("%d bytes from %s: icmp_seq=%d ",
-		bfrom, g_ping.address, icmp->un.echo.sequence);
-	ft_printf("time=%.1f ms type=%d\n", diff, icmp->type);
-//	else
-//		ft_printf("time=%d s %.2f ms type=%d\n", diff.tv_sec, usec, icmp->type);
+	ft_printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1f ms\n",
+		bfrom, g_ping.address, packet->icmp.un.echo.sequence,
+		packet->ip.ttl, diff);
 }
 
 void ft_finalstat(int sig)

@@ -78,8 +78,6 @@ void ft_ping(int sig)
 	packet.tv = ft_time();
 	packet.icmp.checksum = 0;
 	packet.icmp.checksum = csum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
-
-	ft_printf("sendto start\n");
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
 		0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0) {
@@ -107,13 +105,10 @@ int ft_pong()
 	msg.msg_control = buffer;
 	msg.msg_controllen = sizeof(buffer);
 	msg.msg_flags = 0;
-	ft_printf("recvmsg start\n");
 	ret = recvmsg(g_ping.sock, &msg, 0);
 
-	print_ping(msg, 0, ret);
-	ft_printf("lolipop: %d\n", ret);
 	diff = ft_updatetstat(packet.tv, ft_time());
-	print_ping(msg, diff, ret);
+	print_ping(msg.msg_iov->iov_base, diff, ret);
 	return 0;
 }
 

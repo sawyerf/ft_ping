@@ -57,7 +57,7 @@ int		ft_pong();
 int		ft_socket(t_addrinfo *ai);
 t_addrinfo	*get_addr(char *host);
 float		ft_updatetstat(t_timeval t1, t_timeval t2);
-void		print_ping(t_msghdr msg, float diff, int bfrom);
+void		print_ping(t_packet *msg, float diff, int bfrom);
 void		ft_finalstat(int sig);
 int		get_ttl(t_msghdr *msg);
 void		atos(t_addrinfo *ai);
