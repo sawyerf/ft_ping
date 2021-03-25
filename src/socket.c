@@ -50,8 +50,8 @@ t_addrinfo *get_addr(char *host)
 	memset(&hints, 0, sizeof (struct addrinfo));
 	hints.ai_family   = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
-	// hints.ai_protocol = IPPROTO_ICMP;
-	hints.ai_protocol = IPPROTO_RAW;
+	hints.ai_protocol = IPPROTO_ICMP;
+	//hints.ai_protocol = IPPROTO_RAW;
 
 	if ((s = getaddrinfo (host, NULL, &hints, &result)) != 0)
 	{
@@ -123,6 +123,8 @@ int ft_socket(t_addrinfo *ai)
 
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
 	//sock = socket(ai->ai_family, SOCK_DGRAM, IPPROTO_UDP);
+	int yes = 1;
+	setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &yes, sizeof(yes));
 
 	if (sock < 0)
 	{
