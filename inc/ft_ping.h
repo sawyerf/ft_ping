@@ -4,6 +4,8 @@
 # include <sys/socket.h>
 # include <sys/types.h>
 # include <netinet/ip_icmp.h>
+# include <netinet/in.h>
+# include <netinet/ip.h>
 # include <netdb.h>
 # include <stdio.h>
 # include <arpa/inet.h>
@@ -17,6 +19,7 @@ typedef struct icmphdr t_icmphdr;
 typedef struct iphdr t_iphdr;
 typedef struct timeval t_timeval;
 typedef struct msghdr t_msghdr;
+
 
 typedef struct	s_ping
 {
@@ -40,22 +43,24 @@ typedef struct	s_ping
 
 typedef struct	s_packet
 {
+	t_iphdr		ip;
 	t_icmphdr	icmp;
 	t_timeval	tv;
-}				t_packet;
+}		t_packet;
 
 void		fill_icmp(t_icmphdr *icmp);
 t_timeval	ft_time();
 long		ft_timediff(t_timeval t1, t_timeval t2);
-int			main(int arg, char **argv);
+int		main(int arg, char **argv);
 void		ft_ping(int sig);
-int			ft_pong();
-int			ft_socket(t_addrinfo *ai);
+int		ft_pong();
+int		ft_socket(t_addrinfo *ai);
 t_addrinfo	*get_addr(char *host);
 float		ft_updatetstat(t_timeval t1, t_timeval t2);
 void		print_ping(t_msghdr msg, float diff, int bfrom);
 void		ft_finalstat(int sig);
-int			get_ttl(t_msghdr *msg);
+int		get_ttl(t_msghdr *msg);
 void		atos(t_addrinfo *ai);
+void		fill_ip(t_iphdr *ip, char *host);
 
 #endif

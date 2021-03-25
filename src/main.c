@@ -12,8 +12,27 @@ void fill_icmp(t_icmphdr *icmp)
 {
 	ft_memset(icmp, 0, sizeof(t_icmphdr));
 	icmp->type = 8;
+	icmp->code = 0;
 	icmp->un.echo.sequence = 0;
 	icmp->un.echo.id = 1234;
+}
+
+void fill_ip(t_iphdr *ip, char *host)
+{
+	ft_memset(ip, 0, sizeof(t_iphdr));
+	ip->version = 4;
+	ip->ihl = sizeof(t_iphdr) / 4;
+	ip->tos = 0;
+	ip->tot_len = sizeof(t_packet);
+	ip->id = htonl(54321);
+	ip->frag_off = 0;
+	ip->ttl = 255;
+	ip->protocol = IPPROTO_ICMP;
+	ip->saddr = inet_addr("10.0.2.15"); //INADDR_ANY;
+	ip->daddr = inet_addr(host);
+	ip->check = 0;
+	// iph->saddr = inet_addr ( source_ip );    //Spoof the source ip address
+	// iph->daddr = sin.sin_addr.s_addr;
 }
 
 void fill_ping()

@@ -53,7 +53,7 @@ norm:
 $(NAME): $(OBJ)
 	@printf "\033[0;32m[$(NAME)] Compilation [OK]\033[0;0m\n"
 	@make -C libft/
-	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) libft/libft.a -lncurses -o $(NAME)
+	@$(CC) $(CFLAGS) $(DEBUG) $(OBJ) libft/libft.a  -o $(NAME)
 
 clean:
 	@make clean -C libft/

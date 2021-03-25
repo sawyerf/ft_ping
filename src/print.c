@@ -12,8 +12,8 @@ void print_ping(t_msghdr msg, float diff, int bfrom)
 	ft_printf("icmp_seq=%d type=%d code=%d\n",
 		icmp->un.echo.sequence, icmp->type, icmp->code);
 	return ;
-	ft_printf("%d bytes from %s: icmp_seq=%d ttl=%d ",
-		bfrom, g_ping.address, icmp->un.echo.sequence, get_ttl(&msg));
+	ft_printf("%d bytes from %s: icmp_seq=%d ",
+		bfrom, g_ping.address, icmp->un.echo.sequence);
 	ft_printf("time=%.1f ms type=%d\n", diff, icmp->type);
 //	else
 //		ft_printf("time=%d s %.2f ms type=%d\n", diff.tv_sec, usec, icmp->type);
