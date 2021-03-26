@@ -11,10 +11,10 @@ t_ping g_ping;
 void fill_icmp(t_icmphdr *icmp)
 {
 	ft_memset(icmp, 0, sizeof(t_icmphdr));
-	icmp->type = 8;
-	icmp->code = 0;
-	icmp->un.echo.sequence = 0;
-	icmp->un.echo.id = 1234;
+	icmp->icmp_type = 8;
+	icmp->icmp_code = 0;
+	icmp->icmp_seq = 0;
+	icmp->icmp_id = 1234;
 }
 
 void fill_ip(t_iphdr *ip, char *host)

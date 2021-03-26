@@ -14,18 +14,18 @@
 # include <arpa/inet.h>
 
 
-typedef struct addrinfo t_addrinfo;
-typedef struct icmphdr t_icmphdr;
-typedef struct iphdr t_iphdr;
-typedef struct timeval t_timeval;
-typedef struct msghdr t_msghdr;
+typedef struct addrinfo	t_addrinfo;
+typedef struct icmp	t_icmphdr;
+typedef struct iphdr	t_iphdr;
+typedef struct timeval	t_timeval;
+typedef struct msghdr	t_msghdr;
 
 
 typedef struct	s_ping
 {
 	char		*host;
 	char		address[INET6_ADDRSTRLEN];
-	int			sock;
+	int		sock;
 	t_addrinfo	*ai;
 	t_icmphdr	icmp_hdr;
 
@@ -36,8 +36,8 @@ typedef struct	s_ping
 	float		tdev;
 	float		tsum;
 	long long	tsumd;
-	int			ti;
-	int			ttl;
+	int		ti;
+	int		ttl;
 	t_optpars	popt;
 }				t_ping;
 
