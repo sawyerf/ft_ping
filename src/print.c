@@ -6,9 +6,13 @@ extern t_ping g_ping;
 
 void print_ping(t_packet *packet, float diff, int bfrom)
 {
-	ft_printf("%d bytes from %s: icmp_seq=%d ttl=%d time=%.1f ms\n",
-		bfrom, g_ping.address, packet->icmp.un.echo.sequence,
-		packet->ip.ttl, diff);
+	ft_printf("%d bytes from %s: icmp_seq=%d",
+		bfrom, g_ping.address, packet->icmp.un.echo.sequence);
+	if (packet->icmp.type == ICMP_TIME_EXCEEDED)
+		ft_printf(" Time to Live\n");
+	else
+		ft_printf(" ttl=%d time=%.1f ms\n",
+			packet->ip.ttl, diff);
 }
 
 void ft_finalstat(int sig)
