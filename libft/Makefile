@@ -119,6 +119,7 @@ SRC_FILE =	ft_strnsplit.c \
 			str_add.c \
 			str_tools.c \
 			ft_ttos.c \
+			print_hex.c \
 			ft_tabcpy.c 
 
 

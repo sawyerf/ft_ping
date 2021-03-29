@@ -29,10 +29,8 @@ void fill_ip(t_iphdr *ip, char *host)
 	ip->ttl = g_ping.ttl;
 	ip->protocol = IPPROTO_ICMP;
 	ip->saddr = INADDR_ANY;
-	ip->daddr = ((struct sockaddr_in*)g_ping.ai->ai_addr)->sin_addr.s_addr;// inet_addr(host);
+	ip->daddr = ((struct sockaddr_in*)g_ping.ai->ai_addr)->sin_addr.s_addr;
 	ip->check = 0;
-	// iph->saddr = inet_addr ( source_ip );    //Spoof the source ip address
-	// iph->daddr = sin.sin_addr.s_addr;
 }
 
 void fill_ping()

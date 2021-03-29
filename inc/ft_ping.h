@@ -41,6 +41,14 @@ typedef struct	s_ping
 	t_optpars	popt;
 }				t_ping;
 
+typedef struct	s_icmp_err {
+  uint8_t	type;
+  uint8_t	code;
+  uint16_t	checksum;
+  uint16_t	id;
+  uint16_t	sequence;
+}		t_icmp_err;
+
 typedef struct	s_packet
 {
 	t_iphdr		ip;
@@ -62,5 +70,6 @@ void		ft_finalstat(int sig);
 int		get_ttl(t_msghdr *msg);
 void		atos(t_addrinfo *ai);
 void		fill_ip(t_iphdr *ip, char *host);
+unsigned int	ft_ttime();
 
 #endif

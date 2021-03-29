@@ -4,31 +4,21 @@
 
 extern t_ping g_ping;
 
-struct s_lol {
-  uint8_t	type;		/* message type */
-  uint8_t	code;		/* type sub-code */
-  uint16_t	checksum;
-  uint16_t	id;
-  uint16_t	sequence;
-};
-
 void print_ping(t_packet *packet, float diff, int bfrom)
 {
-	struct s_lol *icmp;
+	t_icmp_err *icmp;
 
-	ft_printf("%d bytes from %s: icmp_seq=%d",
-		bfrom, g_ping.address, packet->icmp.icmp_seq);
+	ft_printf("%d bytes from %s: ",
+		bfrom, g_ping.address);
 	if (packet->icmp.icmp_type == ICMP_TIME_EXCEEDED)
 	{
-		ft_printf(" Time to Live\n");
-		icmp = (struct s_lol*)&packet->icmp.icmp_radv;
-		ft_printf("seq=%d\n", icmp->sequence);
-		ft_printf("%d %d\n", sizeof(struct s_lol), sizeof(packet->icmp.icmp_radv));
-		ft_printf("ip_version=%d ip_hl=%d\n", packet->icmp.icmp_ip.ip_v, packet->icmp.icmp_ip.ip_hl);
+		icmp = (t_icmp_err*)&packet->tv;
+		ft_printf("icmp_seq=%d Time to live exceeded\n", icmp->sequence);
 	}
 	else
-		ft_printf(" ttl=%d time=%.1f ms\n",
-			packet->ip.ttl, diff);
+		ft_printf("icmp_seq=%d ttl=%d time=%.1f ms\n",
+			packet->icmp.icmp_seq, packet->ip.ttl, diff);
+	ft_printf("%u s\n%u s\n%u s\n", packet->icmp.icmp_otime, packet->icmp.icmp_ttime, packet->icmp.icmp_rtime);
 }
 
 void ft_finalstat(int sig)

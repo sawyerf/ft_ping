@@ -76,6 +76,7 @@ void ft_ping(int sig)
     	packet.ip.check = csum ((unsigned short *) &packet.ip, packet.ip.tot_len);
 
 	packet.tv = ft_time();
+	packet.icmp.icmp_otime = ft_ttime();
 	packet.icmp.icmp_cksum = 0;
 	packet.icmp.icmp_cksum = csum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
