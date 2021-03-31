@@ -30,7 +30,7 @@ unsigned int ft_ttime()
 	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
-long ft_timediff(t_timeval t1, t_timeval t2)
+long timediff(t_timeval t1, t_timeval t2)
 {
 	t_timeval diff;
 	long ldiff;
@@ -54,7 +54,7 @@ float ft_updatetstat(t_timeval t1, t_timeval t2)
 {
 	float fdiff;
 
-	fdiff = ft_timediff(t1, t2);
+	fdiff = timediff(t1, t2);
 	// update global
 	if (fdiff < g_ping.tmin || !g_ping.tmin)
 		g_ping.tmin = fdiff;

@@ -21,6 +21,10 @@ typedef struct timeval	t_timeval;
 typedef struct msghdr	t_msghdr;
 
 
+typedef struct	s_stat {
+	int error;
+}		t_stat;
+
 typedef struct	s_ping
 {
 	char		*host;
@@ -38,6 +42,7 @@ typedef struct	s_ping
 	long long	tsumd;
 	int		ti;
 	int		ttl;
+	int		error;
 	t_optpars	popt;
 }				t_ping;
 
@@ -58,7 +63,7 @@ typedef struct	s_packet
 
 void		fill_icmp(t_icmphdr *icmp);
 t_timeval	ft_time();
-long		ft_timediff(t_timeval t1, t_timeval t2);
+long		timediff(t_timeval t1, t_timeval t2);
 int		main(int arg, char **argv);
 void		ft_ping(int sig);
 int		ft_pong();
