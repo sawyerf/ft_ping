@@ -68,7 +68,7 @@ void ft_ping(int sig)
 	(void)sig;
 	t_packet packet;
 
-	g_ping.icmp_hdr.un.echo.sequence++;
+	g_ping.icmp_hdr.icmp_seq++;
 	packet.icmp = g_ping.icmp_hdr;
 
 	fill_ip(&packet.ip, g_ping.host);
@@ -76,8 +76,9 @@ void ft_ping(int sig)
     	packet.ip.check = csum ((unsigned short *) &packet.ip, packet.ip.tot_len);
 
 	packet.tv = ft_time();
-	packet.icmp.checksum = 0;
-	packet.icmp.checksum = csum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
+	packet.icmp.icmp_otime = ft_ttime();
+	packet.icmp.icmp_cksum = 0;
+	packet.icmp.icmp_cksum = csum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
 		0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0) {
@@ -107,7 +108,9 @@ int ft_pong()
 	msg.msg_flags = 0;
 	ret = recvmsg(g_ping.sock, &msg, 0);
 
-	diff = ft_updatetstat(packet.tv, ft_time());
+	diff = 0;
+	if (!packet.icmp.icmp_type)
+		diff = ft_updatetstat(packet.tv, ft_time());
 	print_ping(msg.msg_iov->iov_base, diff, ret);
 	return 0;
 }

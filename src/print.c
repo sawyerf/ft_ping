@@ -6,13 +6,19 @@ extern t_ping g_ping;
 
 void print_ping(t_packet *packet, float diff, int bfrom)
 {
-	ft_printf("%d bytes from %s: icmp_seq=%d",
-		bfrom, g_ping.address, packet->icmp.un.echo.sequence);
-	if (packet->icmp.type == ICMP_TIME_EXCEEDED)
-		ft_printf(" Time to Live\n");
+	t_icmp_err *icmp;
+
+	ft_printf("%d bytes from %s: ", bfrom, g_ping.address);
+	if (packet->icmp.icmp_type == ICMP_TIME_EXCEEDED)
+	{
+		icmp = (t_icmp_err*)&packet->tv;
+		ft_printf("icmp_seq=%d Time to live exceeded\n", icmp->sequence);
+		g_ping.error++;
+	}
 	else
-		ft_printf(" ttl=%d time=%.1f ms\n",
-			packet->ip.ttl, diff);
+		ft_printf("icmp_seq=%d ttl=%d time=%.1f ms\n",
+			packet->icmp.icmp_seq, packet->ip.ttl, diff);
+	//ft_printf("%u s\n%u s\n%u s\n", packet->icmp.icmp_otime, packet->icmp.icmp_ttime, packet->icmp.icmp_rtime);
 }
 
 void ft_finalstat(int sig)
@@ -31,17 +37,18 @@ void ft_finalstat(int sig)
 		mdev = sqrt(tsum2 - tsum * tsum); // ft_sqrt
 	}
 	ft_printf("\n--- statistiques ping %s ---\n", g_ping.host);
-	ft_printf("%d paquets transmis, %d reçus, %d%% packet loss, time %.0fms\n",
-		g_ping.icmp_hdr.un.echo.sequence, g_ping.ti,
-		100 - ((g_ping.ti / g_ping.icmp_hdr.un.echo.sequence) * 100),
-		ft_timediff(g_ping.tstart, ft_time()) / 1000.0);
+	ft_printf("%d paquets transmis, %d reçus, ", g_ping.icmp_hdr.icmp_seq, g_ping.ti);
+	if (g_ping.error)
+		ft_printf("+%d errors, ", g_ping.error);
+	else
+		ft_printf("%d%% packet loss, ", 100 - ((g_ping.ti * 100) / g_ping.icmp_hdr.icmp_seq));
+	ft_printf("time %.0fms\n", timediff(g_ping.tstart, ft_time()) / 1000.0);
+	//2 packets transmitted, 0 received, 100% packet loss, time 6ms
 
-	ft_printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",
-		g_ping.tmin / 1000.0,
-		g_ping.tavg / 1000.0,
-		g_ping.tmax / 1000.0,
-		mdev / 1000.0);
+	if (g_ping.ti)
+		ft_printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",
+			g_ping.tmin / 1000.0, g_ping.tavg / 1000.0,
+			g_ping.tmax / 1000.0, mdev / 1000.0);
 	free(g_ping.ai);
 	exit(0);
 }
-

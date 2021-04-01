@@ -15,7 +15,22 @@ t_timeval ft_time()
 	return tv;
 }
 
-long ft_timediff(t_timeval t1, t_timeval t2)
+unsigned int ft_ttime()
+{
+	t_timeval tv;
+	int ret;
+
+	ret = gettimeofday(&tv, NULL);
+	(void)ret;
+	//ft_printf("ret=%d tv_sec=%d tv_usec=%d\n",
+	//	ret, tv.tv_sec, tv.tv_usec);
+	// % ((24*60*60))
+	return tv.tv_sec;
+	ft_printf("sec: %d\n", tv.tv_sec);
+	return tv.tv_sec * 1000 + tv.tv_usec / 1000;
+}
+
+long timediff(t_timeval t1, t_timeval t2)
 {
 	t_timeval diff;
 	long ldiff;
@@ -39,7 +54,7 @@ float ft_updatetstat(t_timeval t1, t_timeval t2)
 {
 	float fdiff;
 
-	fdiff = ft_timediff(t1, t2);
+	fdiff = timediff(t1, t2);
 	// update global
 	if (fdiff < g_ping.tmin || !g_ping.tmin)
 		g_ping.tmin = fdiff;

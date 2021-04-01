@@ -14,18 +14,22 @@
 # include <arpa/inet.h>
 
 
-typedef struct addrinfo t_addrinfo;
-typedef struct icmphdr t_icmphdr;
-typedef struct iphdr t_iphdr;
-typedef struct timeval t_timeval;
-typedef struct msghdr t_msghdr;
+typedef struct addrinfo	t_addrinfo;
+typedef struct icmp	t_icmphdr;
+typedef struct iphdr	t_iphdr;
+typedef struct timeval	t_timeval;
+typedef struct msghdr	t_msghdr;
 
+
+typedef struct	s_stat {
+	int error;
+}		t_stat;
 
 typedef struct	s_ping
 {
 	char		*host;
 	char		address[INET6_ADDRSTRLEN];
-	int			sock;
+	int		sock;
 	t_addrinfo	*ai;
 	t_icmphdr	icmp_hdr;
 
@@ -36,10 +40,19 @@ typedef struct	s_ping
 	float		tdev;
 	float		tsum;
 	long long	tsumd;
-	int			ti;
-	int			ttl;
+	int		ti;
+	int		ttl;
+	int		error;
 	t_optpars	popt;
 }				t_ping;
+
+typedef struct	s_icmp_err {
+  uint8_t	type;
+  uint8_t	code;
+  uint16_t	checksum;
+  uint16_t	id;
+  uint16_t	sequence;
+}		t_icmp_err;
 
 typedef struct	s_packet
 {
@@ -50,7 +63,7 @@ typedef struct	s_packet
 
 void		fill_icmp(t_icmphdr *icmp);
 t_timeval	ft_time();
-long		ft_timediff(t_timeval t1, t_timeval t2);
+long		timediff(t_timeval t1, t_timeval t2);
 int		main(int arg, char **argv);
 void		ft_ping(int sig);
 int		ft_pong();
@@ -62,5 +75,6 @@ void		ft_finalstat(int sig);
 int		get_ttl(t_msghdr *msg);
 void		atos(t_addrinfo *ai);
 void		fill_ip(t_iphdr *ip, char *host);
+unsigned int	ft_ttime();
 
 #endif
