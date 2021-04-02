@@ -16,8 +16,12 @@ void print_ping(t_packet *packet, float diff, int bfrom)
 		g_ping.error++;
 	}
 	else
-		ft_printf("icmp_seq=%d ttl=%d time=%.1f ms\n",
-			packet->icmp.icmp_seq, packet->ip.ttl, diff);
+	{
+		ft_printf("icmp_seq=%d ", packet->icmp.icmp_seq);
+		if (!ft_tabcmp(g_ping.popt.opt, "-v"))
+			ft_printf("type=%d code=%d ", packet->icmp.icmp_type, packet->icmp.icmp_code);
+		ft_printf("ttl=%d time=%.1f ms\n", packet->ip.ttl, diff);
+	}
 	//ft_printf("%u s\n%u s\n%u s\n", packet->icmp.icmp_otime, packet->icmp.icmp_ttime, packet->icmp.icmp_rtime);
 }
 

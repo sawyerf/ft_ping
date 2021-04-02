@@ -30,7 +30,7 @@ void				copy(char *ptr, int *i, long long ipart, long long n)
 {
 	while (n)
 	{
-		ptr[(*i)++] = (ipart / n) + '0';
+		ptr[(*i)++] = (ipart / n) % 10 + '0';
 		ipart %= n;
 		n /= 10;
 	}

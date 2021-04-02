@@ -40,7 +40,7 @@ typedef	struct		s_list
 	size_t			content_size;
 	struct s_list	*prev;
 	struct s_list	*next;
-}					t_list;
+}			t_list;
 
 typedef struct		s_opt
 {
@@ -51,13 +51,13 @@ typedef struct		s_opt
 	void			*var;
 	char			type_var;
 	struct s_opt	*next;
-}					t_opt;
+}			t_opt;
 
 typedef struct		s_optpars
 {
 	char			*arg[MAX_OPTARG];
 	char			*opt[MAX_OPTARG];
-}					t_optpars;
+}			t_optpars;
 
 void				*ft_memset(void *b, int c, size_t len);
 void				ft_bzero(void *s, size_t n);
@@ -155,9 +155,9 @@ char				**ft_tabstrdup(char **dst, char **cpy);
 int					opt_addvar(t_opt **opt, char *arg, void *var, char type_var);
 int					opt_addvar2(t_opt **opt, char *arg, void **var, char type_var);
 void				opt_init(t_opt **opt);
-int  opt_parser(t_opt *opt, char **arg, t_optpars *optpars);
-void	opt_free(t_opt **opt);
-int ft_isint(char *s);
-void print_hex(unsigned char *addr, size_t size);
+int			opt_parser(t_opt *opt, char **arg, t_optpars *optpars, char *name);
+void			opt_free(t_opt **opt);
+int			ft_isint(char *s);
+void			print_hex(unsigned char *addr, size_t size);
 
 #endif

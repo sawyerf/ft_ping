@@ -118,16 +118,13 @@ int ft_pong()
 int ft_socket(t_addrinfo *ai)
 {
 	int sock;
+	int yes;
 
+	yes = 1;
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
-	//sock = socket(ai->ai_family, SOCK_DGRAM, IPPROTO_UDP);
-	int yes = 1;
 	setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &yes, sizeof(yes));
 
 	if (sock < 0)
-	{
-		perror("socket");
-		ft_printf("socket fail");
-	}
+		ft_dprintf(2, "ping: socket: Operation not permitted\n");
 	return sock;
 }

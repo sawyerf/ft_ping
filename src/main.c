@@ -55,7 +55,7 @@ int options(char **argv)
 	opt_init(&opt);
 	opt_addvar(&opt, "-v", NULL, 0);
 	opt_addvar(&opt, "-t", (void*)&g_ping.ttl, OPT_INT);
-	ret = opt_parser(opt, ++argv, &g_ping.popt);
+	ret = opt_parser(opt, ++argv, &g_ping.popt, "ping");
 	opt_free(&opt);
 	if (g_ping.ttl < 0 || g_ping.ttl > 255)
 	{
@@ -66,8 +66,8 @@ int options(char **argv)
 		g_ping.host = g_ping.popt.arg[0];
 	else if (!ret)
 	{
-		ft_printf("lol y manque un argument"); // erreur
-		ret = 1; // autre chiffre
+		ft_printf("Usage: ping [-tv]\n"); // erreur
+		ret = 2; // autre chiffre
 	}
 	return ret;
 }
@@ -81,7 +81,7 @@ int main(int arg, char **argv)
 	if ((ret = options(argv)))
 		return ret;
 	fill_ping();
-	printf("PING %s(%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address,
+	printf("PING %s (%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address,
 		sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
 		return 1;
