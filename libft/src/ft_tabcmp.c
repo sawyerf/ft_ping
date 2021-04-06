@@ -25,3 +25,17 @@ int			ft_tabcmp(char **tab, char *str)
 	}
 	return (-1);
 }
+
+int			ft_tabfind(char **tab, char *str)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i] != NULL)
+	{
+		if (!ft_strcmp(tab[i], str))
+			return (1);
+		i++;
+	}
+	return (0);
+}

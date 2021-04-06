@@ -66,7 +66,7 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 			return OPT_IVLARG;
 		}
 		*(int*)mopt->var = ft_atoi(arg[1]);
-		ft_printf("ttl: %d\n", *(int*)mopt->var);
+		//ft_printf("ttl: %d\n", *(int*)mopt->var);
 	}
 	(*argv)++;
 	return OPT_OK;
@@ -98,17 +98,17 @@ int		opt_parser(t_opt *opt, char **arg, t_optpars *optpars, char *name)
 	while (*arg)
 	{
 		if (!ft_strlen(*arg) || end)
-		{
-			ft_printf("arg: %s\n", *arg); // ajouter au arg
+		//{
+			// ft_printf("arg: %s\n", *arg); // ajouter au arg
 			ft_tabadd(optpars->arg, *arg);
-		}
+		//}
 		else if (!ft_strcmp(*arg, "--"))
 			end = 1;
 		else if (!ft_strncmp(*arg, "-", 1))
 		{
 			if ((mopt = isoptin(opt, *arg)))
 			{
-				ft_printf("opt: %s\n", *arg);
+				//ft_printf("opt: %s\n", *arg);
 				ft_tabadd(optpars->opt, *arg);
 				if (mopt->var)
 					if ((ret = opt_parseopt(mopt, &arg, name)))
@@ -121,10 +121,10 @@ int		opt_parser(t_opt *opt, char **arg, t_optpars *optpars, char *name)
 			}
 		}
 		else 
-		{
-			ft_printf("arg: %s\n", *arg); // ajouter au arg
+		//{
+		//	ft_printf("arg: %s\n", *arg); // ajouter au arg
 			ft_tabadd(optpars->arg, *arg);
-		}
+		//}
 		arg++;
 	}
 	return 0;

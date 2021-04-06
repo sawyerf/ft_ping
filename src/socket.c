@@ -4,7 +4,7 @@
 
 extern t_ping g_ping;
 
-static uint16_t	csum(uint16_t *buffer, size_t len)
+static uint16_t	check_sum(uint16_t *buffer, size_t len)
 {
 	uint32_t	sum;
 
@@ -51,14 +51,12 @@ t_addrinfo *get_addr(char *host)
 	hints.ai_family   = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
 	hints.ai_protocol = IPPROTO_ICMP;
-	//hints.ai_protocol = IPPROTO_RAW;
 
 	if ((s = getaddrinfo (host, NULL, &hints, &result)) != 0)
 	{
 		ft_printf ("getaddrinfo: %s\n", gai_strerror (s));
 		exit (EXIT_FAILURE);
 	}
-	//result->ai_socktype = SOCK_DGRAM;
 	return result;
 }
 
@@ -73,12 +71,12 @@ void ft_ping(int sig)
 
 	fill_ip(&packet.ip, g_ping.host);
     	packet.ip.check = 0;
-    	packet.ip.check = csum ((unsigned short *) &packet.ip, packet.ip.tot_len);
+    	packet.ip.check = check_sum((unsigned short *) &packet.ip, packet.ip.tot_len);
 
 	packet.tv = ft_time();
 	packet.icmp.icmp_otime = ft_ttime();
 	packet.icmp.icmp_cksum = 0;
-	packet.icmp.icmp_cksum = csum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
+	packet.icmp.icmp_cksum = check_sum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
 		0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0) {

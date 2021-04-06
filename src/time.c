@@ -10,8 +10,6 @@ t_timeval ft_time()
 
 	ret = gettimeofday(&tv, NULL);
 	(void)ret;
-	//ft_printf("ret=%d tv_sec=%d tv_usec=%d\n",
-	//	ret, tv.tv_sec, tv.tv_usec);
 	return tv;
 }
 
@@ -22,9 +20,6 @@ unsigned int ft_ttime()
 
 	ret = gettimeofday(&tv, NULL);
 	(void)ret;
-	//ft_printf("ret=%d tv_sec=%d tv_usec=%d\n",
-	//	ret, tv.tv_sec, tv.tv_usec);
-	// % ((24*60*60))
 	return tv.tv_sec;
 	ft_printf("sec: %d\n", tv.tv_sec);
 	return tv.tv_sec * 1000 + tv.tv_usec / 1000;

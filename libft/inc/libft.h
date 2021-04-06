@@ -149,6 +149,7 @@ char				*ft_replace(char *str, char *to, char *by);
 char				*ft_rereplace(char *str, char *to, char *by);
 int					ft_rperr(int ret, char *str);
 int					ft_tabcmp(char **tab, char *s);
+int					ft_tabfind(char **tab, char *s);
 int					ft_lstisin(t_list *lst, char *is);
 char				*ft_ttos(char **tab, char *sep);
 char				**ft_tabstrdup(char **dst, char **cpy);

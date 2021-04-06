@@ -66,7 +66,7 @@ int options(char **argv)
 		g_ping.host = g_ping.popt.arg[0];
 	else if (!ret)
 	{
-		ft_printf("Usage: ping [-tv]\n"); // erreur
+		ft_printf("Usage: ping [-tv] destination\n"); // erreur
 		ret = 2; // autre chiffre
 	}
 	return ret;
@@ -89,16 +89,3 @@ int main(int arg, char **argv)
 	while (1)
 		ft_pong();
 }
-
-// int i =0;
-// while (optpars.opt[i])
-// {
-// 	ft_printf("opt[%d]: %s\n", i, optpars.opt[i]);
-// 	i++;
-// }
-// i = 0;
-// while (optpars.arg[i])
-// {
-// 	ft_printf("arg[%d]: %s\n", i, optpars.arg[i]);
-// 	i++;
-// }
