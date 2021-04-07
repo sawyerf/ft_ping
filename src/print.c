@@ -9,7 +9,7 @@ void print_ping(t_packet *packet, float diff, int bfrom)
 	t_icmp_err *icmp;
 
 	ft_printf("%d bytes from %s: ", bfrom, g_ping.address);
-	if (packet->icmp.icmp_type == ICMP_TIME_EXCEEDED)
+	if (packet->icmp.icmp_type == ICMP_TIMXCEED)
 	{
 		icmp = (t_icmp_err*)&packet->tv;
 		ft_printf("icmp_seq=%d ", icmp->sequence);

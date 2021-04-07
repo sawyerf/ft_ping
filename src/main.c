@@ -24,7 +24,7 @@ void fill_ip(t_iphdr *ip)
 	ip->ip_hl = sizeof(t_iphdr) / 4;
 	ip->ip_tos = 0;
 	ip->ip_len = sizeof(t_packet);
-	ip->ip_id = htonl(54321);
+	ip->ip_id = 54321;
 	ip->ip_off = 0;
 	ip->ip_ttl = g_ping.ttl;
 	ip->ip_p = IPPROTO_ICMP;
