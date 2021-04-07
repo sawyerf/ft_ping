@@ -6,7 +6,7 @@
 /*   By: ktlili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/19 17:46:24 by ktlili            #+#    #+#             */
-/*   Updated: 2019/04/10 18:43:52 by ktlili           ###   ########.fr       */
+/*   Updated: 2021/04/07 15:01:20 by apeyret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	ft_isalldigit(char *s)
 	return (1);
 }
 
-int ft_isint(char *s)
+int	ft_isint(char *s)
 {
 	if (*s == '\0')
-			return 0;
+		return (0);
 	if (*s == '-' || *s == '+')
 		s++;
-	return ft_isalldigit(s);
+	return (ft_isalldigit(s));
 }

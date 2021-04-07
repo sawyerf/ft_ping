@@ -6,7 +6,7 @@
 /*   By: apeyret <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/21 19:17:08 by apeyret           #+#    #+#             */
-/*   Updated: 2019/07/10 12:26:14 by ktlili           ###   ########.fr       */
+/*   Updated: 2021/04/07 15:03:23 by apeyret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ char	**ft_tabadd(char **tab, char *s)
 	len = ft_tablen(tab);
 	tab[len] = s;
 	tab[len + 1] = NULL;
-	return tab;
+	return (tab);
 }

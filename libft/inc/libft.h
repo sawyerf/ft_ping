@@ -6,7 +6,7 @@
 /*   By: ktlili <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/05 22:23:00 by ktlili            #+#    #+#             */
-/*   Updated: 2019/07/06 21:05:30 by apeyret          ###   ########.fr       */
+/*   Updated: 2021/04/07 12:57:45 by apeyret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 # define OPT_STR 2
 # define OPT_VAR 1
 # define OPT_FUNC 2
+
+# define OPT_ARG 0
+# define OPT_OPT 1
+# define OPT_END 2
+# define OPT_ERR 3
 
 # define MAX_OPT 10
 # define MAX_OPTARG 10

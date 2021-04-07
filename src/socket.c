@@ -2,7 +2,7 @@
 #include "ft_ping.h"
 #include <signal.h>
 
-extern t_ping g_ping;
+extern t_ping	g_ping;
 
 static uint16_t	check_sum(uint16_t *buffer, size_t len)
 {
@@ -22,16 +22,16 @@ static uint16_t	check_sum(uint16_t *buffer, size_t len)
 	return ((uint16_t)~sum);
 }
 
-void atos(t_addrinfo *ai)
+void			atos(t_addrinfo *ai)
 {
-	struct addrinfo * _res;
+	struct addrinfo	*res;
 
-	for(_res = ai; _res != NULL; _res = _res->ai_next)
+	for (res = ai; res != NULL; res = res->ai_next)
 	{
-		if (_res->ai_family == AF_INET)
+		if (res->ai_family == AF_INET)
 		{
 			if (NULL == inet_ntop(AF_INET,
-				&((struct sockaddr_in *)_res->ai_addr)->sin_addr,
+				&((struct sockaddr_in *)res->ai_addr)->sin_addr,
 					g_ping.address, sizeof(g_ping.address)))
 			{
 				perror("inet_ntop");
@@ -41,59 +41,57 @@ void atos(t_addrinfo *ai)
 	}
 }
 
-t_addrinfo *get_addr(char *host)
+t_addrinfo		*get_addr(char *host)
 {
-	t_addrinfo hints;
-	t_addrinfo *result;
-	int s;
+	t_addrinfo	hints;
+	t_addrinfo	*result;
+	int			s;
 
-	memset(&hints, 0, sizeof (struct addrinfo));
-	hints.ai_family   = AF_INET;
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
 	hints.ai_protocol = IPPROTO_ICMP;
-
-	if ((s = getaddrinfo (host, NULL, &hints, &result)) != 0)
+	if ((s = getaddrinfo(host, NULL, &hints, &result)) != 0)
 	{
-		ft_printf ("getaddrinfo: %s\n", gai_strerror (s));
-		exit (EXIT_FAILURE);
+		ft_printf("getaddrinfo: %s\n", gai_strerror(s)); // attention fonction interdite
+		exit(EXIT_FAILURE);
 	}
-	return result;
+	return (result);
 }
 
-void ft_ping(int sig)
+void			ft_ping(int sig)
 {
-	int rc;
-	(void)sig;
-	t_packet packet;
+	int			rc;
+	t_packet	packet;
 
+	(void)sig;
 	g_ping.icmp_hdr.icmp_seq++;
 	packet.icmp = g_ping.icmp_hdr;
-
 	fill_ip(&packet.ip);
-    	packet.ip.ip_sum = 0;
-    	packet.ip.ip_sum = check_sum((unsigned short *) &packet.ip, packet.ip.ip_len);
-
+	packet.ip.ip_sum = 0;
+	packet.ip.ip_sum = check_sum((unsigned short*)&packet.ip, packet.ip.ip_len);
 	packet.tv = ft_time();
 	packet.icmp.icmp_otime = ft_ttime();
 	packet.icmp.icmp_cksum = 0;
 	packet.icmp.icmp_cksum = check_sum((void*)&packet.icmp, sizeof(t_packet) - sizeof(t_iphdr));
 	rc = sendto(g_ping.sock, &packet, sizeof(t_packet),
 		0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
-	if (rc <= 0) {
+	if (rc <= 0)
+	{
 		perror("Sendto\n");
 		exit(1);
 	}
 	alarm(1);
 }
 
-int ft_pong()
+int				ft_pong(void)
 {
-	float diff;
-	struct iovec io;
-	struct msghdr msg;
-	char		buffer[512];
-	t_packet	packet;
-	int ret;
+	float			diff;
+	struct iovec	io;
+	struct msghdr	msg;
+	char			buffer[512];
+	t_packet		packet;
+	int				ret;
 
 	io.iov_base = &packet;
 	io.iov_len = sizeof(packet);
@@ -105,24 +103,22 @@ int ft_pong()
 	msg.msg_controllen = sizeof(buffer);
 	msg.msg_flags = 0;
 	ret = recvmsg(g_ping.sock, &msg, 0);
-
 	diff = 0;
 	if (!packet.icmp.icmp_type)
 		diff = ft_updatetstat(packet.tv, ft_time());
 	print_ping(msg.msg_iov->iov_base, diff, ret);
-	return 0;
+	return (0);
 }
 
-int ft_socket(t_addrinfo *ai)
+int				ft_socket(t_addrinfo *ai)
 {
-	int sock;
-	int yes;
+	int	sock;
+	int	yes;
 
 	yes = 1;
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
 	setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &yes, sizeof(yes));
-
 	if (sock < 0)
 		ft_dprintf(2, "ping: socket: Operation not permitted\n");
-	return sock;
+	return (sock);
 }

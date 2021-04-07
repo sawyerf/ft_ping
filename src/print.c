@@ -2,9 +2,9 @@
 #include "ft_ping.h"
 #include <math.h>
 
-extern t_ping g_ping;
+extern	t_ping g_ping;
 
-void print_ping(t_packet *packet, float diff, int bfrom)
+void	print_ping(t_packet *packet, float diff, int bfrom)
 {
 	t_icmp_err *icmp;
 
@@ -27,13 +27,13 @@ void print_ping(t_packet *packet, float diff, int bfrom)
 	}
 }
 
-void ft_finalstat(int sig)
+void	ft_finalstat(int sig)
 {
-	(void)sig;
-	int tsum;
-	double tsum2;
-	int mdev;
+	int		tsum;
+	double	tsum2;
+	int		mdev;
 
+	(void)sig;
 	mdev = 0;
 	if (g_ping.ti)
 	{
@@ -49,7 +49,6 @@ void ft_finalstat(int sig)
 	else
 		ft_printf("%d%% packet loss, ", 100 - ((g_ping.ti * 100) / g_ping.icmp_hdr.icmp_seq));
 	ft_printf("time %.0fms\n", timediff(g_ping.tstart, ft_time()) / 1000.0);
-
 	if (g_ping.ti)
 		ft_printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",
 			g_ping.tmin / 1000.0, g_ping.tavg / 1000.0,
