@@ -16,7 +16,7 @@
 
 typedef struct addrinfo	t_addrinfo;
 typedef struct icmp	t_icmphdr;
-typedef struct iphdr	t_iphdr;
+typedef struct ip	t_iphdr;
 typedef struct timeval	t_timeval;
 typedef struct msghdr	t_msghdr;
 
@@ -74,7 +74,7 @@ void		print_ping(t_packet *msg, float diff, int bfrom);
 void		ft_finalstat(int sig);
 int		get_ttl(t_msghdr *msg);
 void		atos(t_addrinfo *ai);
-void		fill_ip(t_iphdr *ip, char *host);
+void		fill_ip(t_iphdr *ip);
 unsigned int	ft_ttime();
 
 #endif

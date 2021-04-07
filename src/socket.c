@@ -69,9 +69,9 @@ void ft_ping(int sig)
 	g_ping.icmp_hdr.icmp_seq++;
 	packet.icmp = g_ping.icmp_hdr;
 
-	fill_ip(&packet.ip, g_ping.host);
-    	packet.ip.check = 0;
-    	packet.ip.check = check_sum((unsigned short *) &packet.ip, packet.ip.tot_len);
+	fill_ip(&packet.ip);
+    	packet.ip.ip_sum = 0;
+    	packet.ip.ip_sum = check_sum((unsigned short *) &packet.ip, packet.ip.ip_len);
 
 	packet.tv = ft_time();
 	packet.icmp.icmp_otime = ft_ttime();

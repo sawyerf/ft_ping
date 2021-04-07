@@ -23,7 +23,7 @@ void print_ping(t_packet *packet, float diff, int bfrom)
 		ft_printf("icmp_seq=%d ", packet->icmp.icmp_seq);
 		if (ft_tabfind(g_ping.popt.opt, "-v"))
 			ft_printf("type=%d code=%d ", packet->icmp.icmp_type, packet->icmp.icmp_code);
-		ft_printf("ttl=%d time=%.1f ms\n", packet->ip.ttl, diff);
+		ft_printf("ttl=%d time=%.1f ms\n", packet->ip.ip_ttl, diff);
 	}
 }
 

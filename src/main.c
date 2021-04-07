@@ -17,20 +17,20 @@ void fill_icmp(t_icmphdr *icmp)
 	icmp->icmp_id = 1234;
 }
 
-void fill_ip(t_iphdr *ip, char *host)
+void fill_ip(t_iphdr *ip)
 {
 	ft_memset(ip, 0, sizeof(t_iphdr));
-	ip->version = 4;
-	ip->ihl = sizeof(t_iphdr) / 4;
-	ip->tos = 0;
-	ip->tot_len = sizeof(t_packet);
-	ip->id = htonl(54321);
-	ip->frag_off = 0;
-	ip->ttl = g_ping.ttl;
-	ip->protocol = IPPROTO_ICMP;
-	ip->saddr = INADDR_ANY;
-	ip->daddr = ((struct sockaddr_in*)g_ping.ai->ai_addr)->sin_addr.s_addr;
-	ip->check = 0;
+	ip->ip_v = 4;
+	ip->ip_hl = sizeof(t_iphdr) / 4;
+	ip->ip_tos = 0;
+	ip->ip_len = sizeof(t_packet);
+	ip->ip_id = htonl(54321);
+	ip->ip_off = 0;
+	ip->ip_ttl = g_ping.ttl;
+	ip->ip_p = IPPROTO_ICMP;
+	ip->ip_src.s_addr = INADDR_ANY;
+	ip->ip_dst.s_addr = ((struct sockaddr_in*)g_ping.ai->ai_addr)->sin_addr.s_addr;
+	ip->ip_sum = 0;
 }
 
 void fill_ping()
@@ -76,6 +76,7 @@ int main(int arg, char **argv)
 {
 	int ret;	
 
+	(void)arg;
 	signal(SIGALRM, ft_ping);
 	signal(SIGINT, ft_finalstat);
 	if ((ret = options(argv)))
