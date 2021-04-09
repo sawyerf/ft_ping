@@ -26,7 +26,7 @@ SRC_FILE =	main.c \
 			time.c \
 			print.c
 
-CFLAGS =	-I $(INC_DIR) -I libft/inc/ -Wall -g  -Werror -Wextra
+CFLAGS =	-I $(INC_DIR) -I libft/inc/ -Wall -g -lm -Werror -Wextra
 
 OBJ_DIR =	.obj
 OBJ_FILE =	$(SRC_FILE:.c=.o)

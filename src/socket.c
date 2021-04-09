@@ -65,6 +65,7 @@ void			ft_ping(int sig)
 	t_packet	packet;
 
 	(void)sig;
+	ft_memset(&packet, 0, sizeof(t_packet));
 	g_ping.icmp_hdr.icmp_seq++;
 	packet.icmp = g_ping.icmp_hdr;
 	fill_ip(&packet.ip);
@@ -93,6 +94,7 @@ int				ft_pong(void)
 	t_packet		packet;
 	int				ret;
 
+	ft_memset(&packet, 0, sizeof(t_packet));
 	io.iov_base = &packet;
 	io.iov_len = sizeof(packet);
 	msg.msg_name = g_ping.ai;

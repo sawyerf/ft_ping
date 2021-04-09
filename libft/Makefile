@@ -120,6 +120,7 @@ SRC_FILE =	ft_strnsplit.c \
 			str_tools.c \
 			ft_ttos.c \
 			print_hex.c \
+			ft_sqrt.c \
 			ft_tabcpy.c 
 
 

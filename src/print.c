@@ -1,6 +1,5 @@
 #include "libft.h"
 #include "ft_ping.h"
-#include <math.h>
 
 extern	t_ping g_ping;
 
@@ -40,7 +39,7 @@ void	ft_finalstat(int sig)
 		g_ping.tavg += g_ping.tsum / g_ping.ti;
 		tsum = g_ping.tsum / g_ping.ti;
 		tsum2 = g_ping.tsumd / g_ping.ti;
-		mdev = sqrt(tsum2 - tsum * tsum); // ft_sqrt
+		mdev = ft_sqrt(tsum2 - tsum * tsum);
 	}
 	ft_printf("\n--- statistiques ping %s ---\n", g_ping.host);
 	ft_printf("%d packets transmitted, %d received, ", g_ping.icmp_hdr.icmp_seq, g_ping.ti);

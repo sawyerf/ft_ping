@@ -47,6 +47,7 @@ int		options(char **argv)
 	t_opt	*opt;
 	int		ret;
 
+	ft_memset(&g_ping, 0, sizeof(g_ping));
 	g_ping.ttl = 64;
 	opt_init(&opt);
 	opt_addvar(&opt, "-v", NULL, 0);
