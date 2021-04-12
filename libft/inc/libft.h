@@ -45,7 +45,7 @@ typedef	struct		s_list
 	size_t			content_size;
 	struct s_list	*prev;
 	struct s_list	*next;
-}			t_list;
+}					t_list;
 
 typedef struct		s_opt
 {
@@ -56,13 +56,13 @@ typedef struct		s_opt
 	void			*var;
 	char			type_var;
 	struct s_opt	*next;
-}			t_opt;
+}					t_opt;
 
 typedef struct		s_optpars
 {
 	char			*arg[MAX_OPTARG];
 	char			*opt[MAX_OPTARG];
-}			t_optpars;
+}					t_optpars;
 
 char				**ft_splitblanks(char const *s);
 char				**ft_strnsplit(char const *s, char *sep);
@@ -131,10 +131,13 @@ int					ft_tablen(char **tab);
 int					ft_tolower(int c);
 int					ft_toupper(int c);
 int					ft_utoa_base(uintmax_t nbr, int base, char *str, int rev);
-int					opt_addvar(t_opt **opt, char *arg, void *var, char type_var);
-int					opt_addvar2(t_opt **opt, char *arg, void **var, char type_var);
+int					opt_addvar(t_opt **opt, char *arg, void *var,
+					char type_var);
+int					opt_addvar2(t_opt **opt, char *arg, void **var,
+					char type_var);
 int					ft_isint(char *s);
-int					opt_parser(t_opt *opt, char **arg, t_optpars *optpars, char *name);
+int					opt_parser(t_opt *opt, char **arg, t_optpars *optpars,
+					char *name);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);
 size_t				ft_strlen(const char *s);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));

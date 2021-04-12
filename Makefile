@@ -23,6 +23,7 @@ SRC_DIR =	src
 
 SRC_FILE =	main.c \
 			socket.c \
+			socket_tools.c \
 			time.c \
 			print.c
 

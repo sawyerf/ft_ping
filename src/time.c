@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   time.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: apeyret <apeyret@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/04/12 16:11:11 by apeyret           #+#    #+#             */
+/*   Updated: 2021/04/12 16:18:03 by apeyret          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include "ft_ping.h"
 
@@ -21,8 +33,6 @@ unsigned int	ft_ttime(void)
 	ret = gettimeofday(&tv, NULL);
 	(void)ret;
 	return (tv.tv_sec);
-	// ft_printf("sec: %d\n", tv.tv_sec);
-	// return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 }
 
 long			timediff(t_timeval t1, t_timeval t2)

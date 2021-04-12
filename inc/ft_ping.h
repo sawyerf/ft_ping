@@ -1,6 +1,7 @@
 #ifndef FT_PING_H
 # define FT_PING_H
 
+# include "libft.h"
 # include <arpa/inet.h>
 # include <netdb.h>
 # include <netinet/in.h>
@@ -75,5 +76,9 @@ int		get_ttl(t_msghdr *msg);
 void		atos(t_addrinfo *ai);
 void		fill_ip(t_iphdr *ip);
 unsigned int	ft_ttime();
+uint16_t	check_sum(uint16_t *buffer, size_t len);
+void			atos(t_addrinfo *ai);
+char	*ft_gaierr(int err);
+t_addrinfo		*get_addr(char *host);
 
 #endif
