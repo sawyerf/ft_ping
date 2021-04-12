@@ -41,6 +41,15 @@ void			atos(t_addrinfo *ai)
 	}
 }
 
+char	*ft_gaierr(int err)
+{
+	if (err == -2)
+		return ("Name or service not known");
+	else if (err == -3)
+		return ("Temporary failure in name resolution");
+	return ("Fail to resolve host");
+}
+
 t_addrinfo		*get_addr(char *host)
 {
 	t_addrinfo	hints;
@@ -53,7 +62,8 @@ t_addrinfo		*get_addr(char *host)
 	hints.ai_protocol = IPPROTO_ICMP;
 	if ((s = getaddrinfo(host, NULL, &hints, &result)) != 0)
 	{
-		ft_printf("ping: getaddrinfo: fail\n"); // attention fonction interdite
+		ft_printf("ping: %s: %s\n", host, ft_gaierr(s));
+
 		exit(EXIT_FAILURE);
 	}
 	return (result);
