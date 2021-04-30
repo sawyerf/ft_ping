@@ -50,7 +50,7 @@ typedef struct		s_opt
 {
 	char			opt[MAX_OPT];
 	char			type;
-//	int				(func)(char *opt, char *arg);
+	int				(*func)(char *opt, char *arg);
 	void			**var2;
 	void			*var;
 	char			type_var;
@@ -165,5 +165,6 @@ void				ft_tabdel(char ***tab);
 void				opt_init(t_opt **opt);
 void				opt_free(t_opt **opt);
 void				print_hex(unsigned char *addr, size_t size);
+int				opt_addfunc(t_opt **opt, char *arg, int (*func)(char *opt, char *arg));
 
 #endif

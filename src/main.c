@@ -54,6 +54,14 @@ void	fill_ping(void)
 	g_ping.tavg = 0;
 }
 
+int		help(char *opt, char *arg)
+{
+	(void)arg;
+	(void)opt;
+	printf("help\n");
+	return (1);
+}
+
 int		options(char **argv)
 {
 	t_opt	*opt;
@@ -64,6 +72,7 @@ int		options(char **argv)
 	opt_init(&opt);
 	opt_addvar(&opt, "-v", NULL, 0);
 	opt_addvar(&opt, "-t", (void*)&g_ping.ttl, OPT_INT);
+	opt_addfunc(&opt, "-h", &help);
 	ret = opt_parser(opt, ++argv, &g_ping.popt, "ping");
 	opt_free(&opt);
 	if (g_ping.ttl < 0 || g_ping.ttl > 255)

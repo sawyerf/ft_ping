@@ -43,6 +43,20 @@ int		opt_addvar(t_opt **opt, char *arg, void *var, char type_var)
 	return (0);
 }
 
+int		opt_addfunc(t_opt **opt, char *arg, int (*func)(char *opt, char *arg))
+{
+	t_opt *nopt;
+
+	if (!(nopt = malloc(sizeof(t_opt))))
+		return (1);
+	ft_strcpy(nopt->opt, arg);
+	nopt->type = OPT_FUNC;
+	nopt->func = func;
+	nopt->next = *opt;
+	*opt = nopt;
+	return (0);
+}
+
 void	opt_init(t_opt **opt)
 {
 	*opt = NULL;
@@ -52,6 +66,7 @@ t_opt	*isoptin(t_opt *opt, char *arg)
 {
 	while (opt)
 	{
+		printf("%s %s", arg, opt->opt);
 		if (!ft_strcmp(arg, opt->opt))
 			return (opt);
 		opt = opt->next;
@@ -64,14 +79,15 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 	char **arg;
 
 	arg = *argv;
+	printf("arg: %s\n", *arg);
 	if (!arg[1])
 	{
 		printf("%s: option requires an argument -- '%s'\n", name, arg[0]);
 		return (OPT_MISSARG);
 	}
-	if (mopt->type_var == OPT_STR)
+	if (mopt->type == OPT_ARG && mopt->type_var == OPT_STR)
 		*mopt->var2 = arg[1];
-	else if (mopt->type_var == OPT_INT)
+	else if (mopt->type == OPT_ARG && mopt->type_var == OPT_INT)
 	{
 		if (!ft_isint(arg[1]))
 		{
@@ -79,6 +95,11 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 			return (OPT_IVLARG);
 		}
 		*(int*)mopt->var = ft_atoi(arg[1]);
+	}
+	else if (mopt->type == OPT_FUNC)
+	{
+		mopt->func(NULL, *arg);
+		printf("func\n");
 	}
 	(*argv)++;
 	return (OPT_OK);
