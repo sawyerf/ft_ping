@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 
 void			ft_apply_minlen(t_flags *flags, int tocpy, char padding)
 {

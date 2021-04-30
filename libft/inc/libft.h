@@ -17,7 +17,6 @@
 # include <inttypes.h>
 # include <string.h>
 # include <unistd.h>
-# include "ft_printf.h"
 # include "get_next_line.h"
 # include "str.h"
 
@@ -97,11 +96,9 @@ char				*ft_strstr(const char *haystack, const char *needle);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strtrim(char const *s);
 char				*ft_ttos(char **tab, char *sep);
-char				*ft_zprintf(const char *format, ...);
 double				ft_sqrt(double n);
 int					ft_atoi(const char *str);
 int					ft_cisin(char *s, char c);
-int					ft_dprintf(int fd, const char *format, ...);
 int					ft_inner_itoa(intmax_t nbr, int base, char *str);
 int					ft_isalldigit(char *s);
 int					ft_isalnum(int c);
@@ -114,7 +111,6 @@ int					ft_itoa_base(intmax_t nbr, int base, char *str, int rev);
 int					ft_lstadd(t_list **alst, t_list *new);
 int					ft_lstisin(t_list *lst, char *is);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
-int					ft_printf(const char *s, ...);
 int					ft_rperr(int ret, char *str);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strdel(char **as);

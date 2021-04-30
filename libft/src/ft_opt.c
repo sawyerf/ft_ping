@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int		opt_addvar2(t_opt **opt, char *arg, void **var, char type_var)
 {
@@ -65,7 +66,7 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 	arg = *argv;
 	if (!arg[1])
 	{
-		ft_printf("%s: option requires an argument -- '%s'\n", name, arg[0]);
+		printf("%s: option requires an argument -- '%s'\n", name, arg[0]);
 		return (OPT_MISSARG);
 	}
 	if (mopt->type_var == OPT_STR)
@@ -74,7 +75,7 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 	{
 		if (!ft_isint(arg[1]))
 		{
-			ft_printf("%s: invalid argument: '%s'\n", name, arg[1]);
+			printf("%s: invalid argument: '%s'\n", name, arg[1]);
 			return (OPT_IVLARG);
 		}
 		*(int*)mopt->var = ft_atoi(arg[1]);
@@ -123,7 +124,7 @@ int		opt_parser(t_opt *opt, char **arg, t_optpars *optpars, char *name)
 			}
 			else
 			{
-				ft_printf("%s: invalid option -- '%s'\n", name, *arg);
+				printf("%s: invalid option -- '%s'\n", name, *arg);
 				return (OPT_NFOUND);
 			}
 		}

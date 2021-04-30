@@ -19,7 +19,6 @@ CFLAGS = -I inc/ -Wall -Werror -Wextra -g
 INC_DIR = inc
 
 INC_FILE = get_next_line.h \
-		   ft_printf.h \
 		   libft.h
 
 SRC_DIR = src
@@ -89,16 +88,6 @@ SRC_FILE =	ft_strnsplit.c \
 			ft_lstmap.c \
 			get_next_line.c \
 			ft_opt.c \
-			ft_printf/ft_printf.c \
-			ft_printf/pf_base.c \
-			ft_printf/pf_ftoa.c \
-			ft_printf/pf_len.c \
-			ft_printf/pf_options.c \
-			ft_printf/pf_parsing.c \
-			ft_printf/pf_put.c \
-			ft_printf/pf_router.c \
-			ft_printf/pf_struct.c \
-			ft_printf/pf_utils.c \
 			ft_strndup.c \
 			ft_cisin.c \
 			ft_tabdel.c \
@@ -127,7 +116,7 @@ SRC_FILE =	ft_strnsplit.c \
 OBJ_DIR = .obj
 OBJ_FILE = $(SRC_FILE:.c=.o)
 
-CRT_DIR = ft_printf
+CRT_DIR = .
 
 SRC = $(addprefix $(SRC_DIR)/,$(SRC_FILE))
 INC = $(addprefix $(INC_DIR)/,$(INC_FILE))

@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 
 int		ft_encode_wstr(wchar_t *wstr, int tocpy, char *buffer)
 {

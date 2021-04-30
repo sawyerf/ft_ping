@@ -68,7 +68,7 @@ int		options(char **argv)
 	opt_free(&opt);
 	if (g_ping.ttl < 0 || g_ping.ttl > 255)
 	{
-		ft_printf("ping: invalid argument: "\
+		printf("ping: invalid argument: "\
 				"'%d': out of range: 0 <= value <= 255\n", g_ping.ttl);
 		return (1);
 	}
@@ -76,7 +76,7 @@ int		options(char **argv)
 		g_ping.host = g_ping.popt.arg[0];
 	else if (!ret)
 	{
-		ft_printf("Usage: ping [-tv] destination\n");
+		printf("Usage: ping [-tv] destination\n");
 		ret = 2; // autre chiffre
 	}
 	return (ret);

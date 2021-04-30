@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 
 static int		ft_field_width(t_flags flags, int size, char prefix[3])
 {

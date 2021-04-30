@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 int		ft_rperr(int ret, char *str)
 {
-	ft_dprintf(2, str);
+	dprintf(2, str);
 	return (ret);
 }

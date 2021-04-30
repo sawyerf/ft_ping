@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 
 int	get_level0(const char **input, t_flags *flags)
 {

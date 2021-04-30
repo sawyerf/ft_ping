@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 
 int	get_signed(t_flags flags, char *buffer, va_list ap)
 {

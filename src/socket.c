@@ -36,7 +36,7 @@ void			ft_ping(int sig)
 		0, g_ping.ai->ai_addr, g_ping.ai->ai_addrlen);
 	if (rc <= 0)
 	{
-		ft_dprintf(2, "ping: sendto: fail\n");
+		dprintf(2, "ping: sendto: fail\n");
 		exit(1);
 	}
 	alarm(1);
@@ -78,6 +78,6 @@ int				ft_socket(t_addrinfo *ai)
 	sock = socket(ai->ai_family, ai->ai_socktype, ai->ai_protocol);
 	setsockopt(sock, IPPROTO_IP, IP_HDRINCL, &yes, sizeof(yes));
 	if (sock < 0)
-		ft_dprintf(2, "ping: socket: Operation not permitted\n");
+		dprintf(2, "ping: socket: Operation not permitted\n");
 	return (sock);
 }

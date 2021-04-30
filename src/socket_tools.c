@@ -46,7 +46,7 @@ void		atos(t_addrinfo *ai)
 				&((struct sockaddr_in *)res->ai_addr)->sin_addr,
 					g_ping.address, sizeof(g_ping.address)))
 			{
-				ft_dprintf(2, "ping: inet_ntop: fail\n");
+				dprintf(2, "ping: inet_ntop: fail\n");
 				exit(1);
 			}
 		}
@@ -75,7 +75,7 @@ t_addrinfo	*get_addr(char *host)
 	hints.ai_protocol = IPPROTO_ICMP;
 	if ((s = getaddrinfo(host, NULL, &hints, &result)) != 0)
 	{
-		ft_printf("ping: %s: %s\n", host, ft_gaierr(s));
+		printf("ping: %s: %s\n", host, ft_gaierr(s));
 		exit(EXIT_FAILURE);
 	}
 	return (result);

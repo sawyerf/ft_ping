@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
 
 static int	get_flags(const char **input, t_flags *flags)
 {
