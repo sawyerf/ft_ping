@@ -25,6 +25,7 @@ SRC_FILE =	main.c \
 			socket.c \
 			socket_tools.c \
 			time.c \
+			fill.c \
 			print.c
 
 CFLAGS =	-I $(INC_DIR) -I libft/inc/ -Wall -g -lm -Werror -Wextra

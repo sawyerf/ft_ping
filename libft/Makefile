@@ -88,6 +88,7 @@ SRC_FILE =	ft_strnsplit.c \
 			ft_lstmap.c \
 			get_next_line.c \
 			ft_opt.c \
+			ft_optadd.c \
 			ft_strndup.c \
 			ft_cisin.c \
 			ft_tabdel.c \

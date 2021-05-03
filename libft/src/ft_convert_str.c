@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 void			ft_apply_minlen(t_flags *flags, int tocpy, char padding)
 {
 	while ((flags->min_length - tocpy) > 0)

@@ -25,7 +25,8 @@ void	print_ping(t_packet *packet, float diff, int bfrom)
 		icmp = (t_icmp_err*)&packet->tv;
 		printf("icmp_seq=%d ", icmp->sequence);
 		if (ft_tabfind(g_ping.popt.opt, "-v"))
-			printf("type=%d code=%d ", packet->icmp.icmp_type, packet->icmp.icmp_code);
+			printf("type=%d code=%d ",
+				packet->icmp.icmp_type, packet->icmp.icmp_code);
 		printf("Time to live exceeded\n");
 		g_ping.error++;
 	}
@@ -33,7 +34,8 @@ void	print_ping(t_packet *packet, float diff, int bfrom)
 	{
 		printf("icmp_seq=%d ", packet->icmp.icmp_seq);
 		if (ft_tabfind(g_ping.popt.opt, "-v"))
-			printf("type=%d code=%d ", packet->icmp.icmp_type, packet->icmp.icmp_code);
+			printf("type=%d code=%d ",
+				packet->icmp.icmp_type, packet->icmp.icmp_code);
 		printf("ttl=%d time=%.1f ms\n", packet->ip.ip_ttl, diff);
 	}
 }
@@ -54,11 +56,13 @@ void	ft_finalstat(int sig)
 		mdev = ft_sqrt(tsum2 - tsum * tsum);
 	}
 	printf("\n--- statistiques ping %s ---\n", g_ping.host);
-	printf("%d packets transmitted, %d received, ", g_ping.icmp_hdr.icmp_seq, g_ping.ti);
+	printf("%d packets transmitted, %d received, ",
+		g_ping.icmp_hdr.icmp_seq, g_ping.ti);
 	if (g_ping.error)
 		printf("+%d errors, ", g_ping.error);
 	else
-		printf("%d%% packet loss, ", 100 - ((g_ping.ti * 100) / g_ping.icmp_hdr.icmp_seq));
+		printf("%d%% packet loss, ",
+			100 - ((g_ping.ti * 100) / g_ping.icmp_hdr.icmp_seq));
 	printf("time %.0fms\n", timediff(g_ping.tstart, ft_time()) / 1000.0);
 	if (g_ping.ti)
 		printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",

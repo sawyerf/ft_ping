@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 int	get_signed(t_flags flags, char *buffer, va_list ap)
 {
 	intmax_t	store;

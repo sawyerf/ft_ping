@@ -39,7 +39,7 @@
 # define OPT_MISSARG 3
 # define OPT_FUNCERR 4
 
-typedef	struct		s_list
+typedef struct		s_list
 {
 	void			*content;
 	size_t			content_size;
@@ -166,6 +166,7 @@ void				ft_tabdel(char ***tab);
 void				opt_init(t_opt **opt);
 void				opt_free(t_opt **opt);
 void				print_hex(unsigned char *addr, size_t size);
-int				opt_addfunc(t_opt **opt, char *arg, int (*func)(char *opt, char *arg));
+int					opt_addfunc(t_opt **opt, char *arg,
+					int (*func)(char *opt, char *arg));
 
 #endif

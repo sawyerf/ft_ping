@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 static int		ft_field_width(t_flags flags, int size, char prefix[3])
 {
 	int		to_write;

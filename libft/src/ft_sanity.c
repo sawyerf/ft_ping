@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 void	ft_sanity_unsigned(t_flags *flags)
 {
 	if ((flags->conversion > 5) && (flags->conversion < 12))

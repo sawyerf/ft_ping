@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 static int	get_flags(const char **input, t_flags *flags)
 {
 	if (get_level0(input, flags))
