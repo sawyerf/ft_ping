@@ -91,9 +91,9 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 		printf("%s: option requires an argument -- '%s'\n", name, arg[0]);
 		return (OPT_MISSARG);
 	}
-	else if (mopt->type == OPT_ARG && mopt->type_var == OPT_STR)
+	else if (mopt->type == OPT_VAR && mopt->type_var == OPT_STR)
 		*mopt->var2 = arg[1];
-	else if (mopt->type == OPT_ARG && mopt->type_var == OPT_INT)
+	else if (mopt->type == OPT_VAR && mopt->type_var == OPT_INT)
 	{
 		if (!ft_isint(arg[1]))
 		{

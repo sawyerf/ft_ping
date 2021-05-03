@@ -104,7 +104,10 @@ int		main(int arg, char **argv)
 	printf("PING %s (%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address,
 		sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
+	{
+		free(g_ping.ai);
 		return (1);
+	}
 	ft_ping(0);
 	while (1)
 		ft_pong();
