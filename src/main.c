@@ -58,7 +58,7 @@ int		help(char *opt, char *arg)
 {
 	(void)arg;
 	(void)opt;
-	printf("help\n");
+	printf("Usage: ping [-tv] destination\n");
 	return (1);
 }
 
@@ -86,7 +86,7 @@ int		options(char **argv)
 	else if (!ret)
 	{
 		printf("Usage: ping [-tv] destination\n");
-		ret = 2; // autre chiffre
+		ret = 2;
 	}
 	return (ret);
 }

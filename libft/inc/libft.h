@@ -37,6 +37,7 @@
 # define OPT_NFOUND 1
 # define OPT_IVLARG 2
 # define OPT_MISSARG 3
+# define OPT_FUNCERR 4
 
 typedef	struct		s_list
 {

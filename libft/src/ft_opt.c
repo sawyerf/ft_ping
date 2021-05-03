@@ -19,6 +19,7 @@ int		opt_addvar2(t_opt **opt, char *arg, void **var, char type_var)
 
 	if (!(nopt = malloc(sizeof(t_opt))))
 		return (1);
+	ft_memset(nopt, 0, sizeof(t_opt));
 	ft_strcpy(nopt->opt, arg);
 	nopt->var2 = var;
 	nopt->type = OPT_VAR;
@@ -34,6 +35,7 @@ int		opt_addvar(t_opt **opt, char *arg, void *var, char type_var)
 
 	if (!(nopt = malloc(sizeof(t_opt))))
 		return (1);
+	ft_memset(nopt, 0, sizeof(t_opt));
 	ft_strcpy(nopt->opt, arg);
 	nopt->var = var;
 	nopt->type = OPT_VAR;
@@ -49,6 +51,7 @@ int		opt_addfunc(t_opt **opt, char *arg, int (*func)(char *opt, char *arg))
 
 	if (!(nopt = malloc(sizeof(t_opt))))
 		return (1);
+	ft_memset(nopt, 0, sizeof(t_opt));
 	ft_strcpy(nopt->opt, arg);
 	nopt->type = OPT_FUNC;
 	nopt->func = func;
@@ -66,7 +69,6 @@ t_opt	*isoptin(t_opt *opt, char *arg)
 {
 	while (opt)
 	{
-		printf("%s %s", arg, opt->opt);
 		if (!ft_strcmp(arg, opt->opt))
 			return (opt);
 		opt = opt->next;
@@ -79,13 +81,17 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 	char **arg;
 
 	arg = *argv;
-	printf("arg: %s\n", *arg);
-	if (!arg[1])
+	if (mopt->type == OPT_FUNC)
+	{
+		if (mopt->func(NULL, *arg))
+			return (OPT_FUNCERR);
+	}
+	else if (!arg[1])
 	{
 		printf("%s: option requires an argument -- '%s'\n", name, arg[0]);
 		return (OPT_MISSARG);
 	}
-	if (mopt->type == OPT_ARG && mopt->type_var == OPT_STR)
+	else if (mopt->type == OPT_ARG && mopt->type_var == OPT_STR)
 		*mopt->var2 = arg[1];
 	else if (mopt->type == OPT_ARG && mopt->type_var == OPT_INT)
 	{
@@ -95,11 +101,6 @@ int		opt_parseopt(t_opt *mopt, char ***argv, char *name)
 			return (OPT_IVLARG);
 		}
 		*(int*)mopt->var = ft_atoi(arg[1]);
-	}
-	else if (mopt->type == OPT_FUNC)
-	{
-		mopt->func(NULL, *arg);
-		printf("func\n");
 	}
 	(*argv)++;
 	return (OPT_OK);
@@ -139,7 +140,7 @@ int		opt_parser(t_opt *opt, char **arg, t_optpars *optpars, char *name)
 			if ((mopt = isoptin(opt, *arg)))
 			{
 				ft_tabadd(optpars->opt, *arg);
-				if (mopt->var)
+				if (mopt->var || mopt->func)
 					if ((ret = opt_parseopt(mopt, &arg, name)))
 						return (ret);
 			}
