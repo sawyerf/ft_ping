@@ -6,7 +6,7 @@
 /*   By: apeyret <apeyret@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 16:11:06 by apeyret           #+#    #+#             */
-/*   Updated: 2021/04/12 16:17:02 by apeyret          ###   ########.fr       */
+/*   Updated: 2021/06/15 17:32:21 by apeyret          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_addrinfo	*get_addr(char *host)
 	t_addrinfo	*result;
 	int			s;
 
-	memset(&hints, 0, sizeof(struct addrinfo));
+	ft_memset(&hints, 0, sizeof(struct addrinfo));
 	hints.ai_family = AF_INET;
 	hints.ai_socktype = SOCK_RAW;
 	hints.ai_protocol = IPPROTO_ICMP;
