@@ -102,7 +102,6 @@ SRC_FILE =	ft_strnsplit.c \
 			ft_rereplace.c \
 			ft_strichr.c \
 			ft_strisprint.c \
-			ft_rperr.c \
 			ft_strisdigit.c \
 			ft_tabcmp.c	\
 			ft_lstisin.c \

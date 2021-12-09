@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "ft_ping.h"
 
-t_ping	g_ping;
+extern t_ping	g_ping;
 
 void	fill_icmp(t_icmphdr *icmp)
 {

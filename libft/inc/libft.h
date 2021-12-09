@@ -112,7 +112,6 @@ int					ft_itoa_base(intmax_t nbr, int base, char *str, int rev);
 int					ft_lstadd(t_list **alst, t_list *new);
 int					ft_lstisin(t_list *lst, char *is);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
-int					ft_rperr(int ret, char *str);
 int					ft_strcmp(const char *s1, const char *s2);
 int					ft_strdel(char **as);
 int					ft_strequ(char const *s1, char const *s2);

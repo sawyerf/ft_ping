@@ -13,7 +13,7 @@
 #include "ft_ping.h"
 #include "libft.h"
 
-t_ping	g_ping;
+extern t_ping	g_ping;
 
 uint16_t	check_sum(uint16_t *buffer, size_t len)
 {
