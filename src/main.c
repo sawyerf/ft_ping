@@ -36,7 +36,7 @@ int		options(char **argv)
 	opt_addfunc(&opt, "-h", &help);
 	ret = opt_parser(opt, ++argv, &g_ping.popt, "ping");
 	opt_free(&opt);
-	if (g_ping.ttl < 0 || g_ping.ttl > 255)
+	if (g_ping.ttl <= 0 || g_ping.ttl > 255)
 	{
 		printf("ping: invalid argument: "\
 				"'%d': out of range: 0 <= value <= 255\n", g_ping.ttl);
