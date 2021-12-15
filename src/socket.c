@@ -64,10 +64,9 @@ int				ft_pong(void)
 	ret = recvmsg(g_ping.sock, &msg, 0);
 	diff = 0;
 	if (!packet.icmp.icmp_type)
-	{
 		diff = ft_updatetstat(packet.tv, ft_time());
+	if (packet.icmp.icmp_type != 8)
 		print_ping(msg.msg_iov->iov_base, diff, ret);
-	}
 	return (0);
 }
 
