@@ -68,6 +68,6 @@ void	ft_finalstat(int sig)
 		printf("rtt min/avg/max/mdev = %.3f/%.3f/%.3f/%.3f ms\n",
 			g_ping.tmin / 1000.0, g_ping.tavg / 1000.0,
 			g_ping.tmax / 1000.0, mdev / 1000.0);
-	free(g_ping.ai);
+	freeaddrinfo(g_ping.ai);
 	exit(0);
 }
