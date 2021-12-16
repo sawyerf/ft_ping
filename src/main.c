@@ -66,7 +66,7 @@ int		main(int arg, char **argv)
 		sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
 	{
-		free(g_ping.ai);
+		freeaddrinfo(g_ping.ai);
 		return (1);
 	}
 	ft_ping(0);
