@@ -21,7 +21,7 @@ void	fill_icmp(t_icmphdr *icmp)
 	icmp->icmp_type = 8;
 	icmp->icmp_code = 0;
 	icmp->icmp_seq = 0;
-	icmp->icmp_id = 1234;
+	icmp->icmp_id = icmp_uniqueid();
 }
 
 void	fill_ip(t_iphdr *ip)

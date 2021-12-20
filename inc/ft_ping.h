@@ -89,5 +89,6 @@ t_addrinfo		*get_addr(char *host);
 void			fill_icmp(t_icmphdr *icmp);
 void			fill_ip(t_iphdr *ip);
 void			fill_ping(void);
+unsigned short	icmp_uniqueid(void);
 
 #endif

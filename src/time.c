@@ -35,6 +35,16 @@ unsigned int	ft_ttime(void)
 	return (tv.tv_sec);
 }
 
+unsigned short icmp_uniqueid(void)
+{
+	t_timeval	tv;
+	long		ret;
+
+	ret = gettimeofday(&tv, NULL);
+	ret = (tv.tv_sec * 100 + tv.tv_usec / 10000) % 65534;
+	return ((unsigned short)ret);
+}
+
 long			timediff(t_timeval t1, t_timeval t2)
 {
 	t_timeval	diff;
