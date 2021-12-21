@@ -19,7 +19,7 @@ int		help(char *opt, char *arg)
 {
 	(void)arg;
 	(void)opt;
-	printf("Usage: ping [-tv] destination\n");
+	printf("Usage: ping [-htv] destination\n");
 	return (1);
 }
 
@@ -46,7 +46,7 @@ int		options(char **argv)
 		g_ping.host = g_ping.popt.arg[0];
 	else if (!ret)
 	{
-		printf("Usage: ping [-tv] destination\n");
+		printf("Usage: ping [-htv] destination\n");
 		ret = 2;
 	}
 	return (ret);
