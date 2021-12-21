@@ -62,8 +62,8 @@ int		main(int arg, char **argv)
 	if ((ret = options(argv)))
 		return (ret);
 	fill_ping();
-	printf("PING %s (%s) %zu(%zu) data bytes\n", g_ping.host, g_ping.address,
-		sizeof(t_packet) - sizeof(t_icmphdr), sizeof(t_packet) + 20);
+	printf("PING %s (%s) %zu(%zu) bytes of data\n", g_ping.host, g_ping.address,
+		sizeof(t_packet) - 20 - 8, sizeof(t_packet));
 	if ((g_ping.sock = ft_socket(g_ping.ai)) < 0)
 	{
 		freeaddrinfo(g_ping.ai);
