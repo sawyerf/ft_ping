@@ -63,7 +63,8 @@ int				ft_pong(void)
 	msg.msg_flags = 0;
 	ret = recvmsg(g_ping.sock, &msg, 0);
 	diff = 0;
-	if (packet.icmp.icmp_id != g_ping.icmp_hdr.icmp_id)
+	if ((packet.icmp.icmp_id && packet.icmp.icmp_id != g_ping.icmp_hdr.icmp_id) ||
+		(!packet.icmp.icmp_id && ((t_icmp_err*)&packet.tv)->id != g_ping.icmp_hdr.icmp_id))
 		return (0);
 	if (!packet.icmp.icmp_type)
 		diff = ft_updatetstat(packet.tv, ft_time());
